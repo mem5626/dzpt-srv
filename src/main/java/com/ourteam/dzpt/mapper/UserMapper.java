@@ -4,13 +4,18 @@ import com.ourteam.dzpt.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
     User selectById(int id);
     User selectByName(String name);
-    List<User> selectAll();
-    int delete(int id);
+    Map getUserInfo(String name);
+    List<Map> selectAll();
+    int delete(String userName);
     int create(User user);
     int updateInfo(User user);
+    int updatePassword(User user);
+    List<Map> getBanList();
+    int banUser(User user);
 }

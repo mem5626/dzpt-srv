@@ -2,10 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.UserMapper">
 
-    <resultMap id="UserInfoMap" type="com.ourteam.dzpt.entity.User">
+    <resultMap id="UserInfoMap" type="Map">
         <result column="id" property="id" />
         <result column="userName" property="userName" />
-        <result column="password" property="password" />
         <result column="phone" property="phone" />
         <result column="email" property="email"/>
         <result column="companyName" property="companyName"/>
@@ -13,17 +12,34 @@
         <result column="createDate" property="createDate"/>
     </resultMap>
 
-    <select id="selectAll" resultMap="UserInfoMap">select * from user </select>
+    <select id="selectAll" resultMap="UserInfoMap">select id,userName,phone,email,companyName,address,createDate from user where ifBan=0 and admin=0</select>
     <select id="selectById" resultType="com.ourteam.dzpt.entity.User" parameterType="integer">select * from user where id = #{id}</select>
+    <select id="getUserInfo" resultMap="UserInfoMap" parameterType="STRING">select id,userName,phone,email,companyName,address,createDate from user where userName=#{userName}</select>
     <select id="selectByName" resultType="com.ourteam.dzpt.entity.User" parameterType="STRING">select * from user where userName = #{userName}</select>
 
-    <delete id="delete" parameterType="INTEGER">delete from user where id=#{id}</delete>
+    <delete id="delete" parameterType="STRING">delete from user where userName=#{userName}</delete>
     <update id="updateInfo" parameterType="com.ourteam.dzpt.entity.User">
         UPDATE user SET
-        phone=#{phone},email=#{email},companyName=#{companyName},address=#{address}
+        <trim suffix="" suffixOverrides=",">
+            <if test="phone!=null and phone!=''">
+                phone = #{phone},
+            </if>
+            <if test="email!=null and email!=''">
+                email = #{email}
+            </if>
+            <if test="address!=null and address!=''">
+                address = #{address}
+            </if>
+        </trim>
         WHERE id=#{id}
     </update>
+    <update id="updatePassword" parameterType="User">
+        update user set password = #{password} where id=#{id}
+    </update>
     <insert id="create" parameterType="com.ourteam.dzpt.entity.User">
-        insert into user set userName=#{userName},password=#{password},phone=#{phone},email=#{email},companyName=#{companyName},address=#{address},createDate=#{createDate},admin=#{admin}
+        insert into user set userName=#{userName},password=#{password},phone=#{phone},email=#{email},companyName=#{companyName},address=#{address},createDate=#{createDate},admin=#{admin},ifBan=#{ifBan}
     </insert>
+
+    <select id="getBanList" resultMap="UserInfoMap">select id,userName,phone,email,companyName,address,createDate from user where ifBan = 1</select>
+    <update id="banUser" parameterType="User">update user set ifBan=#{ifBan} where id=#{id}</update>
 </mapper>

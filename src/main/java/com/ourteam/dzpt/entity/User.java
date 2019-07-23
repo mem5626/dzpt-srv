@@ -10,6 +10,7 @@ public class User {
     private String address;
     private String createDate;
     private int admin=0;
+    private int ifBan=0;
 
     public int getId() {
         return id;
@@ -67,6 +68,14 @@ public class User {
         this.address = address;
     }
 
+    public int getIfBan() {
+        return ifBan;
+    }
+
+    public void setIfBan(int ifBan) {
+        this.ifBan = ifBan;
+    }
+
     public String getCreateDate() {
         return createDate;
     }
@@ -82,4 +91,6 @@ public class User {
     public void setAdmin(int admin) {
         this.admin = admin;
     }
+
+
 }

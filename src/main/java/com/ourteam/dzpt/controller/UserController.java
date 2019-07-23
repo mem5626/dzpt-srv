@@ -11,44 +11,43 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/user",method = RequestMethod.GET)
-    public Response selectUser(User user){
-        List<User> users = userService.selectAll();
-        return new Response(ExceptionMsg.Success,users);
-    }
-
-    @RequestMapping(value = "/user/{id}",method = RequestMethod.GET)
-    public Response selectUserById(@PathVariable int id){
-        User user = userService.selectById(id);
-        if(user == null) return new Response(ExceptionMsg.Error);
-        else return new Response(ExceptionMsg.Success,user);
-    }
-
-    @RequestMapping(value = "/user",method = RequestMethod.POST)
-    public Response createUser(@RequestBody User user){
-        user.setCreateDate(LocalDateTime.now().toString());
-
-        //判断密码是否为空并加密
-        if(user.getPassword() != null){user.setPassword(MD5Util.stringToMD5(user.getPassword()));}
-        else return new Response(ExceptionMsg.ParameterError);
-
-        //判断用户名是否存在
-        if(user.getUserName() != null){
-            if(userService.selectByName(user.getUserName()) != null)return new Response(ExceptionMsg.UserNameOccupied);
-        }else{
-            return new Response(ExceptionMsg.ParameterError);
+    @RequestMapping(value = "/user/getUserList",method = RequestMethod.GET)
+    public Response selectUsers(){
+        try {
+            HashMap<String,List> map = new HashMap<String, List>();
+            map.put("userList",userService.selectAll());
+            return new Response(ExceptionMsg.Success,map);
+        }catch (Exception e){
+            return new Response(ExceptionMsg.getByCode(e.getMessage()));
         }
+    }
 
-        //添加用户
-        if(userService.createUser(user) == 1) return new Response(ExceptionMsg.Success);
-        else return new Response(ExceptionMsg.Error);
+    @RequestMapping(value = "/user/getUserInfo",method = RequestMethod.GET)
+    public Response selectById(User user){
+        try {
+            return new Response(ExceptionMsg.Success,userService.getUserInfo(user.getUserName()));
+        }catch (Exception e){
+            return new Response(ExceptionMsg.getByCode(e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/signup",method = RequestMethod.POST)
+    public Response createUser(@RequestBody User user){
+        try {
+            if(userService.createUser(user)==1) return new Response(ExceptionMsg.Success);
+            else return new Response(ExceptionMsg.Error);
+        }catch (Exception e){
+            return new Response(ExceptionMsg.getByCode(e.getMessage()));
+        }
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
@@ -79,5 +78,58 @@ public class UserController {
         HttpSession session= request.getSession();
         if(session!=null) session.setAttribute("uid",null);
         return new Response(ExceptionMsg.Success);
+    }
+
+    @RequestMapping(value = "/user/updateUserInfo")
+    public Response updateUserInfo(HttpServletRequest request,@RequestBody User user){
+        int id = (int)request.getSession().getAttribute("uid");
+        if(!user.getUserName().equals(userService.selectById(id).getUserName()))
+            return new Response(ExceptionMsg.NotAllow);
+        user.setId(id);
+
+        try {
+            if(userService.updateInfo(user)==0) return new Response(ExceptionMsg.Error);
+            else return new Response(ExceptionMsg.Success);
+        }catch (Exception e){
+            return new Response(ExceptionMsg.getByCode(e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/user/updatePassword")
+    public Response updatePassword(HttpServletRequest request,@RequestBody Map<String, String> info){
+//        int id = (int)request.getSession().getAttribute("uid");
+        info.put("id",4+"");
+        try {
+            if(userService.updatePassword(info)==0) return new Response(ExceptionMsg.Error);
+            else return new Response(ExceptionMsg.Success);
+        }catch (Exception e){
+            return new Response(ExceptionMsg.getByCode(e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/user/deleteUser")
+    public Response deleteUser(HttpServletRequest request,@RequestBody User user){
+        if(userService.deleteUser(user.getUserName())==1) return new Response(ExceptionMsg.Success);
+        else return new Response(ExceptionMsg.Error);
+    }
+
+    @RequestMapping(value ="/user/banUser")
+    public Response banUser(@RequestBody User user){
+        try {
+            if(userService.banUser(user)==0) return new Response(ExceptionMsg.Error);
+            else return new Response(ExceptionMsg.Success);
+        }catch (Exception e){
+            return new Response(ExceptionMsg.getByCode(e.getMessage()));
+        }
+    }
+    @RequestMapping(value = "/user/getBanList")
+    public Response getBanList(){
+        try {
+            HashMap<String,List> map = new HashMap<String, List>();
+            map.put("banList",userService.getBanList());
+            return new Response(ExceptionMsg.Success,map);
+        }catch (Exception e){
+            return new Response(ExceptionMsg.getByCode(e.getMessage()));
+        }
     }
 }

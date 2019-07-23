@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Order(1)
-@WebFilter(urlPatterns = {"/user","/user/*"},filterName = "loginFilter")
+//@WebFilter(urlPatterns = {"/user","/user/*"},filterName = "loginFilter")
 public class loginFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -28,12 +28,11 @@ public class loginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpSession session = request.getSession(false);
-        System.out.print(((HttpServletRequest) servletRequest).getRequestURI());
-        System.out.print(((HttpServletRequest) servletRequest).getMethod());
         if(session !=null && session.getAttribute("uid") != null){
             filterChain.doFilter(servletRequest,servletResponse);
         }else{
             try {
+                System.out.print(session);
                 returnJson((HttpServletResponse)servletResponse,new Response(ExceptionMsg.NotLogin).toString());
             }catch (Exception e){
                 logger.error("response error",e);
