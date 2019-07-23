@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ourteam.dzpt.mapper.BillMapper">
+
+    <resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.Bill" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="payer" property="payer" jdbcType="INTEGER" />
+        <result column="receiver" property="receiver" jdbcType="INTEGER" />
+        <result column="money" property="money" jdbcType="INTEGER" />
+        <result column="tradeWay" property="tradeWay" jdbcType="INTEGER" />
+        <result column="tradeType" property="tradeType" jdbcType="INTEGER" />
+        <result column="orderId" property="orderId" jdbcType="INTEGER" />
+        <result column="balance" property="balance" jdbcType="INTEGER" />
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="selectBillByUid" parameterType="integer">select * from bill where userId=#{uid}</select>
+
+    <delete id="deleteById" parameterType="INTEGER">delete from bill where id=#{id}</delete>
+
+    <insert id="createBill" parameterType="com.ourteam.dzpt.entity.Bill" >
+    insert into bill (id, payer, receiver,
+      money, tradeWay, tradeType,
+      orderId, balance, createDate
+      )
+    values (#{id,jdbcType=INTEGER}, #{payer,jdbcType=INTEGER}, #{receiver,jdbcType=INTEGER},
+      #{money,jdbcType=INTEGER}, #{tradeWay,jdbcType=INTEGER}, #{tradeType,jdbcType=INTEGER},
+      #{orderId,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
+      )
+    </insert>
+
+    <update id="updateBill" parameterType="com.ourteam.dzpt.entity.Bill" >
+        update bill
+        set id = #{id,jdbcType=INTEGER},
+        payer = #{payer,jdbcType=INTEGER},
+        receiver = #{receiver,jdbcType=INTEGER},
+        money = #{money,jdbcType=INTEGER},
+        tradeWay = #{tradeWay,jdbcType=INTEGER},
+        tradeType = #{tradeType,jdbcType=INTEGER},
+        orderId = #{orderId,jdbcType=INTEGER},
+        balance = #{balance,jdbcType=INTEGER},
+        createDate = #{createDate,jdbcType=TIMESTAMP}
+    </update>
+</mapper>

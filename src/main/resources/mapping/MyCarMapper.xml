@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ourteam.dzpt.mapper.MyCarMapper">
+    <resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.MyCar" >
+        <id column="listedGoodsId" property="listedGoodsId" jdbcType="INTEGER" />
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <delete id="deleteByGoodsId" parameterType="java.lang.Integer" >
+    delete from myCar
+    where listedGoodsId = #{listedGoodsId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.ourteam.dzpt.entity.MyCar" >
+    insert into myCar (listedGoodsId, createDate)
+    values (#{listedGoodsId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+    </insert>
+
+</mapper>
