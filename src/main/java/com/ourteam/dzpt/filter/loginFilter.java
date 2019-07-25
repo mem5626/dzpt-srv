@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@Order(1)
+@Order(2)
 //@WebFilter(urlPatterns = {"/user","/user/*"},filterName = "loginFilter")
 public class loginFilter implements Filter {
 
@@ -24,18 +24,19 @@ public class loginFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession(false);
-        if(session !=null && session.getAttribute("uid") != null){
-            filterChain.doFilter(servletRequest,servletResponse);
-        }else{
+        if (session != null && session.getAttribute("uid") != null) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
             try {
                 System.out.print(session);
-                returnJson((HttpServletResponse)servletResponse,new Response(ExceptionMsg.NotLogin).toString());
-            }catch (Exception e){
-                logger.error("response error",e);
+                returnJson((HttpServletResponse) servletResponse, new Response(ExceptionMsg.NotLogin).toString());
+            } catch (Exception e) {
+                logger.error("response error", e);
             }
         }
     }
@@ -46,7 +47,7 @@ public class loginFilter implements Filter {
     }
 
 
-    private void returnJson(HttpServletResponse response, String json) throws Exception{
+    private void returnJson(HttpServletResponse response, String json) throws Exception {
         PrintWriter writer = null;
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=utf-8");
@@ -55,7 +56,7 @@ public class loginFilter implements Filter {
             writer.print(json);
 
         } catch (IOException e) {
-            logger.error("response error",e);
+            logger.error("response error", e);
         } finally {
             if (writer != null)
                 writer.close();

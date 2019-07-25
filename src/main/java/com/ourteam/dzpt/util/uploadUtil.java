@@ -11,11 +11,11 @@ public class uploadUtil {
     public static String uploadImage(MultipartFile pic, String imageDir) throws IllegalStateException, IOException {
 
         String originalFileName = pic.getOriginalFilename();
-        String imageName = UUID.randomUUID().toString()+originalFileName.substring(originalFileName.lastIndexOf("."));
+        String imageName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf("."));
 
         String fileDirPath = "src/main/resources/upload/" + imageDir;
         File fileDir = new File(fileDirPath);
-        if(!fileDir.exists()){
+        if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
         String filePath = fileDir.getAbsolutePath() + "\\" + imageName;
@@ -24,7 +24,7 @@ public class uploadUtil {
             File newFile = new File(filePath);
             pic.transferTo(newFile);
             return imageDir + "\\" + imageName;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

@@ -36,7 +36,7 @@
     <update id="updatePassword" parameterType="User">
         update user set password = #{password} where id=#{id}
     </update>
-    <insert id="create" parameterType="com.ourteam.dzpt.entity.User">
+    <insert id="create" parameterType="User">
         insert into user set userName=#{userName},password=#{password},phone=#{phone},email=#{email},companyName=#{companyName},address=#{address},createDate=#{createDate},admin=#{admin},ifBan=#{ifBan}
     </insert>
 

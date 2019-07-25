@@ -12,7 +12,7 @@ public class ListedGoods {
     private Integer supplier;
     private Date createDate;
     private String billNumber;
-    private Integer type;
+    private String type;
     private Integer region;
     private Integer hangtype;
     private Boolean ismatch;
@@ -90,11 +90,11 @@ public class ListedGoods {
         this.billNumber = billNumber == null ? null : billNumber.trim();
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 

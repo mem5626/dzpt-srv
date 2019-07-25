@@ -1,13 +1,32 @@
 package com.ourteam.dzpt.entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class User {
+
+    public interface Default{}
+    public interface Info{}
+
     private int id;
+    @NotBlank(message="用户名不能为空",groups = {Default.class})
     private String userName;
+
+    @NotBlank(message = "密码不能为空",groups = {Default.class})
     private String password;
+
+    @NotBlank(message = "电话号码不能为空",groups = {Info.class})
     private String phone;
+
+    @NotBlank(message = "邮箱不能为空",groups = {Info.class})
     private String email;
+
+    @NotBlank(message = "公司名称不能为空",groups = {Info.class})
     private String companyName;
+
+    @NotBlank(message = "地址不能不空",groups = {Info.class})
     private String address;
+
     private String createDate;
     private int admin=0;
     private int ifBan=0;
