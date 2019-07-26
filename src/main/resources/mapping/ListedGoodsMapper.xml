@@ -12,7 +12,6 @@
         <result column="price" property="price"/>
         <result column="region" property="region"/>
         <result column="quality" property="quality"/>
-        <result column="address" property="address"/>
         <result column="createDate" property="createDate"/>
     </resultMap>
 
@@ -41,16 +40,16 @@
                 quality = #{quality},
             </if>
             <if test="ismatch != null">
-                ismatch = ismatch,
+                ismatch = #{ismatch},
             </if>
         </trim>
         where id=#{id}
     </update>
 
     <insert id="hangNow" parameterType="ListedGoods">
-        insert into listedGoods set hangetype=#{hangetype},goodsName=#{goodsName},
-        `type`=#{type},amount={#amount},unit=#{unit},price=#{price},region=#{region},
-        quality=#{quality},ismatch=#{ismatch},supplier=#{supplier}
+        insert into listedGoods set hangtype=#{hangtype},goodsName=#{goodsName},
+        `type`=#{type},amount=#{amount},unit=#{unit},price=#{price},region=#{region},
+        quality=#{quality},ismatch=#{ismatch},supplier=#{supplier},createDate=#{createDate}
     </insert>
 
     <delete id="deleteHangGood" parameterType="integer">
@@ -58,12 +57,14 @@
     </delete>
 
     <select id="getHangListByType" parameterType="integer" resultMap="hangInfoMap">
-        select supplier,id,goodsName,type,amount,unit,price,region,quality,address,createDate
+        select supplier,id,goodsName,type,amount,unit,price,region,quality,createDate
         from listedGoods where hangtype=#{hangtype}
     </select>
     <select id="getMyHangList" parameterType="integer" resultMap="hangInfoMap">
-        select supplier,id,goodsName,type,amount,unit,price,region,quality,address,createDate
+        select supplier,id,goodsName,type,amount,unit,price,region,quality,createDate
         from listedGoods where supplier=#{supplier}
     </select>
-
+    <select id="searchSupplierById" parameterType="integer" resultType="integer">
+        select supplier from listedGoods where id=#{id}
+    </select>
 </mapper>

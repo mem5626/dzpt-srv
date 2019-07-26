@@ -1,12 +1,22 @@
 package com.ourteam.dzpt.mapper;
 
 import com.ourteam.dzpt.entity.ListedGoods;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 import java.util.Map;
 
+@Mapper
 public interface ListedGoodsMapper {
-    int changeHangInfo(ListedGoods listedGoods);
-    int hangNow(ListedGoods listedGoods);
-    int deleteHangGood(String listedGoodsId);
-    Map getHangListByType(int hangtype);
-    Map getMyHangList(int supplier);
+    Integer changeHangInfo(ListedGoods listedGoods);
+
+    Integer hangNow(ListedGoods listedGoods);
+
+    Integer deleteHangGood(int listedGoodsId);
+
+    Integer searchSupplierById(int id);
+
+    List<Map> getHangListByType(int hangtype);
+
+    List<Map> getMyHangList(int supplier);
 }

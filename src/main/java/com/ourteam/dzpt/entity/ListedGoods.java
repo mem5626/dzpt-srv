@@ -1,22 +1,43 @@
 package com.ourteam.dzpt.entity;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class ListedGoods {
+    public interface ListedGoodsInfo {
+    }
+
+    public interface ListedGoodsCreate {
+    }
+
+    @NotBlank(message = "挂牌号不能为空")
     private Integer id;
+    @NotBlank(message = "商品名不能为空", groups = ListedGoodsInfo.class)
     private String goodsName;
+    @NotNull(message = "数量不能为空", groups = ListedGoodsInfo.class)
     private Integer amount;
+    @NotBlank(message = "单位不能为空", groups = ListedGoodsInfo.class)
     private String unit;
+    @NotNull(message = "单价不能为空", groups = ListedGoodsInfo.class)
     private Integer price;
+    @NotBlank(message = "质量标准不能为空", groups = ListedGoodsInfo.class)
     private String quality;
+    @NotNull(message = "挂牌者不能为空", groups = ListedGoodsCreate.class)
     private Integer supplier;
-    private Date createDate;
-    private String billNumber;
+    @NotBlank(message = "商品类型不能为空", groups = ListedGoodsInfo.class)
     private String type;
+    @NotNull(message = "来源地不能为空", groups = ListedGoodsInfo.class)
     private Integer region;
+    @NotNull(message = "挂牌类型不能为空", groups = ListedGoodsCreate.class)
     private Integer hangtype;
+    @NotNull(message = "请选择是否允许撮合交易", groups = ListedGoodsInfo.class)
     private Boolean ismatch;
-    private Integer tradeBillId;
+
+    private String createDate;
+    private String billNumber;
+
 
     public Integer getId() {
         return id;
@@ -74,11 +95,11 @@ public class ListedGoods {
         this.supplier = supplier;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -122,11 +143,4 @@ public class ListedGoods {
         this.ismatch = ismatch;
     }
 
-    public Integer getTradebillid() {
-        return tradeBillId;
-    }
-
-    public void setTradeBillId(Integer tradeBillId) {
-        this.tradeBillId = tradeBillId;
-    }
 }

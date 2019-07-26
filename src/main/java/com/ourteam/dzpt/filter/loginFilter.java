@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Order(2)
-//@WebFilter(urlPatterns = {"/user","/user/*"},filterName = "loginFilter")
+@WebFilter(urlPatterns = {"/user", "/user/*", "/message/*",
+        "/hang/changeHangInfo", "/hang/hangNow", "/hang/deleteHangGood", "/hang/getMyHangList"},
+        filterName = "loginFilter")
 public class loginFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
