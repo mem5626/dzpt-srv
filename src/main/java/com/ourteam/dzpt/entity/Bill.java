@@ -1,16 +1,20 @@
 package com.ourteam.dzpt.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Bill {
     private Integer id;
-    private Integer payer;
-    private Integer receiver;
+    private Integer userId;
     private Integer money;
-    private Integer tradeWay;
+    private Integer balance;
+    private Integer drcrflg;
+    private String tradeWay;
     private Integer tradeType;
     private Integer orderId;
-    private Integer balance;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createDate;
 
     public Integer getId() {
@@ -21,20 +25,12 @@ public class Bill {
         this.id = id;
     }
 
-    public Integer getPayer() {
-        return payer;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setPayer(Integer payer) {
-        this.payer = payer;
-    }
-
-    public Integer getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Integer receiver) {
-        this.receiver = receiver;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getMoney() {
@@ -45,11 +41,27 @@ public class Bill {
         this.money = money;
     }
 
-    public Integer getTradeWay() {
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Integer balance) {
+        this.balance = balance;
+    }
+
+    public Integer getDrcrflg() {
+        return drcrflg;
+    }
+
+    public void setDrcrflg(Integer drcrflg) {
+        this.drcrflg = drcrflg;
+    }
+
+    public String getTradeWay() {
         return tradeWay;
     }
 
-    public void setTradeWay(Integer tradeWay) {
+    public void setTradeWay(String tradeWay) {
         this.tradeWay = tradeWay;
     }
 
@@ -69,14 +81,6 @@ public class Bill {
         this.orderId = orderId;
     }
 
-    public Integer getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Integer balance) {
-        this.balance = balance;
-    }
-
     public Date getCreateDate() {
         return createDate;
     }
@@ -84,5 +88,7 @@ public class Bill {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+
 
 }

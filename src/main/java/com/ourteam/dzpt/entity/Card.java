@@ -1,10 +1,17 @@
 package com.ourteam.dzpt.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class Card {
     private int id;
     private int userId;
     private int cardNumber;
     private String bank;
+
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    private Date bindTime;
 
     public int getId() {
         return id;
@@ -36,5 +43,14 @@ public class Card {
 
     public void setBank(String bank) {
         this.bank = bank;
+    }
+
+
+    public Date getBindTime() {
+        return bindTime;
+    }
+
+    public void setBindTime(Date bindTime) {
+        this.bindTime = bindTime;
     }
 }

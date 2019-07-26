@@ -1,8 +1,17 @@
 package com.ourteam.dzpt.entity;
 
+import javax.validation.constraints.NotBlank;
+
 public class Account {
+
+    public interface Default{}
+
+    @NotBlank(message = "用户id不能为空",groups = {Account.Default.class})
     private int userId;
+
+    @NotBlank(message = "密码不能为空",groups = {Account.Default.class})
     private String payPassword;
+
     private long balacne;
 
     public int getUserId() {

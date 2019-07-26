@@ -9,11 +9,11 @@
         <result column="bank" property="bank" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="selectCardByUid" parameterType="integer">select * from card where userId=#{uid}</select>
+    <select id="selectCardByUid" parameterType="INTEGER" resultType="com.ourteam.dzpt.entity.Card">select * from card where userId=#{uid}</select>
 
     <delete id="deleteById" parameterType="INTEGER">delete from card where id=#{id}</delete>
 
-    <insert id="createCard">insert into card set cardNumber=#{cardNumber},userId=#{userId},bank=#{bank}</insert>
+    <insert id="addCard" parameterType="com.ourteam.dzpt.entity.Card" >insert into card set cardNumber=#{card.cardNumber},userId=#{card.userId},bank=#{card.bank},bindTime=#{card.bindTime}</insert>
 
     <update id="updateCard" parameterType="com.ourteam.dzpt.entity.Card">
         update card set cardNumber=#{cardNumber},bank=#{bank} where userId=#{userId}

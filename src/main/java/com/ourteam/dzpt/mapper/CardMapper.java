@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface CardMapper{
     List<Card> selectCardByUid(int uid);
-    int createCard(Card card);
+    int addCard(Card card);
     int deleteById(Integer id);
     int updateCard(Card card);
 }
