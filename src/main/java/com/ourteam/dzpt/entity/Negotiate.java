@@ -1,49 +1,50 @@
 package com.ourteam.dzpt.entity;
 
 public class Negotiate {
-    private Integer id;
-    private Integer status;
-    private Integer currentPrice;
-    private String createDate;
-    private Integer tradeBillId;
 
-    public Integer getId() {
-        return id;
-    }
+  private Integer id;
+  private Integer status;
+  private Integer currentPrice;
+  private String createDate;
+  private Integer tradeBillId;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getStatus() {
-        return status;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+  public Integer getStatus() {
+    return status;
+  }
 
-    public Integer getCurrentPrice() {
-        return currentPrice;
-    }
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
-    public void setCurrentPrice(Integer currentPrice) {
-        this.currentPrice = currentPrice;
-    }
+  public Integer getCurrentPrice() {
+    return currentPrice;
+  }
 
-    public String getCreateDate() {
-        return createDate;
-    }
+  public void setCurrentPrice(Integer currentPrice) {
+    this.currentPrice = currentPrice;
+  }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
+  public String getCreateDate() {
+    return createDate;
+  }
 
-    public Integer getTradeBillId() {
-        return tradeBillId;
-    }
+  public void setCreateDate(String createDate) {
+    this.createDate = createDate;
+  }
 
-    public void setTradeBillId(Integer tradeBillId) {
-        this.tradeBillId = tradeBillId;
-    }
+  public Integer getTradeBillId() {
+    return tradeBillId;
+  }
+
+  public void setTradeBillId(Integer tradeBillId) {
+    this.tradeBillId = tradeBillId;
+  }
 }

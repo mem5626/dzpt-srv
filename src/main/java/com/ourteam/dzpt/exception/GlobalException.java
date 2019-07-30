@@ -3,23 +3,24 @@ package com.ourteam.dzpt.exception;
 import com.ourteam.dzpt.entity.ExceptionMsg;
 
 public class GlobalException extends RuntimeException {
-    private String code;
 
-    public GlobalException(ExceptionMsg exceptionMsg) {
-        super(exceptionMsg.getMsg());
-        this.code = exceptionMsg.getCode();
-    }
+  private String code;
 
-    public GlobalException(String code, String msg) {
-        super(msg);
-        this.code = code;
-    }
+  public GlobalException(ExceptionMsg exceptionMsg) {
+    super(exceptionMsg.getMsg());
+    this.code = exceptionMsg.getCode();
+  }
 
-    public String getCode() {
-        return code;
-    }
+  public GlobalException(String code, String msg) {
+    super(msg);
+    this.code = code;
+  }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
 }

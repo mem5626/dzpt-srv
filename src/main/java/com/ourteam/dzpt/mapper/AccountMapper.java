@@ -5,9 +5,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AccountMapper {
-    Account selectAccountByUid(int uid);
-    int getBalanceByUid(int uid);
-    int createAccount(Account account);
-    int setPassword(Account account);
-    int updateAccount(Account account);
+
+  Account selectAccountByUid(int uid);
+
+  int getBalanceByUid(int uid);
+
+  int createAccount(Account account);
+
+  int setPassword(Account account);
+
+  int updateAccount(Account account);
 }

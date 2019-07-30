@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.BillMapper">
 
-    <!--<resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.Bill" >-->
-        <!--<result column="id" property="id" jdbcType="INTEGER" />-->
-        <!--<result column="payer" property="payer" jdbcType="INTEGER" />-->
-        <!--<result column="receiver" property="receiver" jdbcType="INTEGER" />-->
-        <!--<result column="money" property="money" jdbcType="INTEGER" />-->
-        <!--<result column="tradeWay" property="tradeWay" jdbcType="INTEGER" />-->
-        <!--<result column="tradeType" property="tradeType" jdbcType="INTEGER" />-->
-        <!--<result column="orderId" property="orderId" jdbcType="INTEGER" />-->
-        <!--<result column="balance" property="balance" jdbcType="INTEGER" />-->
-        <!--<result column="createDate" property="createDate" jdbcType="TIMESTAMP" />-->
-    <!--</resultMap>-->
+  <!--<resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.Bill" >-->
+  <!--<result column="id" property="id" jdbcType="INTEGER" />-->
+  <!--<result column="payer" property="payer" jdbcType="INTEGER" />-->
+  <!--<result column="receiver" property="receiver" jdbcType="INTEGER" />-->
+  <!--<result column="money" property="money" jdbcType="INTEGER" />-->
+  <!--<result column="tradeWay" property="tradeWay" jdbcType="INTEGER" />-->
+  <!--<result column="tradeType" property="tradeType" jdbcType="INTEGER" />-->
+  <!--<result column="orderId" property="orderId" jdbcType="INTEGER" />-->
+  <!--<result column="balance" property="balance" jdbcType="INTEGER" />-->
+  <!--<result column="createDate" property="createDate" jdbcType="TIMESTAMP" />-->
+  <!--</resultMap>-->
 
-    <select id="selectBillByUid" resultType="com.ourteam.dzpt.entity.Bill" parameterType="integer">select * from bill where userId=#{uid}</select>
+  <select id="selectBillByUid" resultType="com.ourteam.dzpt.entity.Bill"
+    parameterType="integer">select * from bill where userId=#{uid}</select>
 
-    <delete id="deleteById" parameterType="INTEGER">delete from bill where id=#{id}</delete>
+  <delete id="deleteById" parameterType="INTEGER">delete from bill where id=#{id}</delete>
 
-    <insert id="createBill" parameterType="com.ourteam.dzpt.entity.Bill" >
+  <insert id="createBill" parameterType="com.ourteam.dzpt.entity.Bill">
     insert into bill (userId,
       money, balance, drcrflg, tradeWay, tradeTypeName,tradeType,
       orderId,  createDate
@@ -29,7 +31,7 @@
       )
     </insert>
 
-    <update id="updateBill" parameterType="com.ourteam.dzpt.entity.Bill" >
+  <update id="updateBill" parameterType="com.ourteam.dzpt.entity.Bill">
         update bill
         set userId = #{userId,jdbcType=INTEGER},
         balance = #{balance,jdbcType=INTEGER},

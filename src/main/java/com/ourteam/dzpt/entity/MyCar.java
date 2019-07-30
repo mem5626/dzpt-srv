@@ -1,50 +1,51 @@
 package com.ourteam.dzpt.entity;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 public class MyCar {
-    private Integer id;
 
-    @NotNull(message = "用户ID不能为空")
-    private Integer userId;
+  private Integer id;
 
-    @NotNull(message = "商品不能为空")
-    private Integer listedGoodsId;
+  @NotNull(message = "用户ID不能为空")
+  private Integer userId;
 
-    private Date createDate;
+  @NotNull(message = "商品不能为空")
+  private Integer listedGoodsId;
 
-    public Integer getId() {
-        return id;
-    }
+  private Date createDate;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getUserId() {
-        return userId;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+  public Integer getUserId() {
+    return userId;
+  }
 
-    public Integer getListedGoodsId() {
-        return listedGoodsId;
-    }
+  public void setUserId(Integer userId) {
+    this.userId = userId;
+  }
 
-    public void setListedGoodsId(Integer listedGoodsId) {
-        this.listedGoodsId = listedGoodsId;
-    }
+  public Integer getListedGoodsId() {
+    return listedGoodsId;
+  }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+  public void setListedGoodsId(Integer listedGoodsId) {
+    this.listedGoodsId = listedGoodsId;
+  }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+  public Date getCreateDate() {
+    return createDate;
+  }
+
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
+  }
 
 
 }

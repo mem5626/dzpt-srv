@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.MyCarMapper">
-    <resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.MyCar" >
-        <id column="listedGoodsId" property="listedGoodsId" jdbcType="INTEGER" />
-        <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.MyCar">
+    <id column="listedGoodsId" property="listedGoodsId" jdbcType="INTEGER"/>
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+  </resultMap>
 
-    <delete id="deleteByGoodsId" parameterType="MyCar" >
+  <delete id="deleteByGoodsId" parameterType="MyCar">
     delete from myCar
     where listedGoodsId = #{listedGoodsId} and userId = #{userId}
     </delete>
 
-    <insert id="insert" parameterType="MyCar" >
+  <insert id="insert" parameterType="MyCar">
     insert into myCar set userId=#{userId},listedGoodsId=#{listedGoodsId},createDate=#{createDate}
     </insert>
 
-    <select id="getMyCar" parameterType="integer" resultType="Map">
+  <select id="getMyCar" parameterType="integer" resultType="Map">
         select amount,price,userName supplierName,goodsName,listedGoodsId,myCar.createDate from myCar,listedGoods,user where userId=#{userId}
         and listedGoods.id = listedGoodsId and listedGoods.supplier = user.id
     </select>

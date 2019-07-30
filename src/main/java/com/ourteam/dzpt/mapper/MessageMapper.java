@@ -16,6 +16,7 @@ public interface MessageMapper {
     int deleteMessage(Integer id);
 
     int createSystemMsg(SystemMsg systemMsg);
+
     List<SystemMsg> getSystemMsgList();
 
     int createNegotiate(Negotiate negotiate);

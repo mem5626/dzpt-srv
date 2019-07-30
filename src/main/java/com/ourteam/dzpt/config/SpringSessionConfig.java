@@ -8,13 +8,13 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @Configuration
 public class SpringSessionConfig {
 
-    public SpringSessionConfig() {
-    }
+  public SpringSessionConfig() {
+  }
 
-    @Bean
-    public CookieSerializer httpSessionIdResolver() {
-        DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
-        cookieSerializer.setSameSite(null);
-        return cookieSerializer;
-    }
+  @Bean
+  public CookieSerializer httpSessionIdResolver() {
+    DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
+    cookieSerializer.setSameSite(null);
+    return cookieSerializer;
+  }
 }

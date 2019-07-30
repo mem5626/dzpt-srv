@@ -36,9 +36,7 @@ public class MessageService {
         return messageMapper.getMessageList(uid);
     }
 
-    public int deleteMessage(Integer messageId, String userName, Integer uid) {
-        if (usermapper.selectByName(userName).getId() != uid)
-            throw new GlobalException(ExceptionMsg.NotAllow);
+    public int deleteMessage(Integer messageId, Integer uid) {
         return messageMapper.deleteMessage(messageId);
     }
 
@@ -55,7 +53,6 @@ public class MessageService {
     public int negotiate(Negotiate negotiate, Message message, Integer listGoodsId){
         String createDate = LocalDateTime.now().toString();
         message.setCreateDate(createDate);
-        messageMapper.createMessage(message);
 
         TradeBill tradeBill = new TradeBill();
         tradeBill.setBuyer(message.getSender());

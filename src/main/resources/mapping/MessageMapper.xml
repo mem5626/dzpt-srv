@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.MessageMapper">
-    <insert id="createMessage" parameterType="Message">
+  <insert id="createMessage" parameterType="Message">
         insert into message set sender=#{sender},receiver=#{receiver},`type`=#{type},title=#{title},content=#{content},
         createDate=#{createDate}
     </insert>
-    <delete id="deleteMessage" parameterType="integer">
+  <delete id="deleteMessage" parameterType="integer">
         delete from message where id=#{id}
     </delete>
-    <select id="getMessageList" parameterType="integer" resultType="Map">
+  <select id="getMessageList" parameterType="integer" resultType="Map">
         select message.id id, type, title, content, message.createDate, userName senderName from message,user where receiver=#{uid} and sender = user.id;
     </select>
-    <insert id="createSystemMsg" parameterType="SystemMsg">
+  <insert id="createSystemMsg" parameterType="SystemMsg">
         insert into systemMsg set title=#{title},content=#{content},createDate=#{createDate}
     </insert>
-    <select id="getSystemMsgList" resultType="SystemMsg">
+  <select id="getSystemMsgList" resultType="SystemMsg">
         select * from systemMsg
     </select>
-    <insert id="createNegotiate" parameterType="Negotiate">
+  <insert id="createNegotiate" parameterType="Negotiate">
         insert into negotiate set status=#{status},currentPrice=#{currentPrice},
         createDate=#{createDate},tradeBillId=#{tradeBillId}
     </insert>

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.CardMapper">
 
-    <resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.Card" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="userId" property="userId" jdbcType="INTEGER" />
-        <result column="cardNumber" property="cardNumber" jdbcType="INTEGER" />
-        <result column="bank" property="bank" jdbcType="VARCHAR" />
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.Card">
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="userId" property="userId" jdbcType="INTEGER"/>
+    <result column="cardNumber" property="cardNumber" jdbcType="INTEGER"/>
+    <result column="bank" property="bank" jdbcType="VARCHAR"/>
+  </resultMap>
 
-    <select id="selectCardByUid" parameterType="INTEGER" resultType="com.ourteam.dzpt.entity.Card">select * from card where userId=#{uid}</select>
+  <select id="selectCardByUid" parameterType="INTEGER"
+    resultType="com.ourteam.dzpt.entity.Card">select * from card where userId=#{uid}</select>
 
-    <delete id="deleteById" parameterType="INTEGER">delete from card where id=#{id}</delete>
+  <delete id="deleteById" parameterType="INTEGER">delete from card where id=#{id}</delete>
 
-    <insert id="addCard" parameterType="com.ourteam.dzpt.entity.Card" >insert into card set cardNumber=#{cardNumber},userId=#{userId},bank=#{bank},bindTime=#{bindTime}</insert>
+  <insert id="addCard"
+    parameterType="com.ourteam.dzpt.entity.Card">insert into card set cardNumber=#{cardNumber},userId=#{userId},bank=#{bank},bindTime=#{bindTime}</insert>
 
-    <update id="updateCard" parameterType="com.ourteam.dzpt.entity.Card">
+  <update id="updateCard" parameterType="com.ourteam.dzpt.entity.Card">
         update card set cardNumber=#{cardNumber},bank=#{bank} where userId=#{userId}
     </update>
 </mapper>

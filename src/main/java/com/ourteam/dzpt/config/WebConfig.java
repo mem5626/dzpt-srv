@@ -7,10 +7,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 @Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        AntPathMatcher matcher = new AntPathMatcher();
-        matcher.setCaseSensitive(false);
-        configurer.setPathMatcher(matcher);
-    }
+
+  @Override
+  public void configurePathMatch(PathMatchConfigurer configurer) {
+    AntPathMatcher matcher = new AntPathMatcher();
+    matcher.setCaseSensitive(false);
+    configurer.setPathMatcher(matcher);
+  }
 }

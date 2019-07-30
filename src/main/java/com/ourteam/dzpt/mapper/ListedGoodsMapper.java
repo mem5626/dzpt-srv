@@ -8,21 +8,22 @@ import java.util.Map;
 
 @Mapper
 public interface ListedGoodsMapper {
-    Integer changeHangInfo(ListedGoods listedGoods);
 
-    Integer hangNow(ListedGoods listedGoods);
+  Integer changeHangInfo(ListedGoods listedGoods);
 
-    Integer deleteHangGood(int listedGoodsId);
+  Integer hangNow(ListedGoods listedGoods);
 
-    Integer searchSupplierById(int id);
+  Integer deleteHangGood(int listedGoodsId);
 
-    List<Map> getHangListByType(String hangtype);
+  Integer searchSupplierById(int id);
 
-    List<Map> getMyHangList(int supplier);
+  List<Map> getHangListByType(String hangtype);
 
-    ListedGoods getListedGoodsInfo(int id);
+  List<Map> getMyHangList(int supplier);
 
-    Map getListedGoodsInfoByMap(int id);
+  ListedGoods getListedGoodsInfo(int id);
 
-    Integer changeStatus(int id, int status);
+  Map getListedGoodsInfoByMap(int id);
+
+  Integer changeStatus(int id, int status);
 }

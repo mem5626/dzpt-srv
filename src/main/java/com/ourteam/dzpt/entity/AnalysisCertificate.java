@@ -3,40 +3,41 @@ package com.ourteam.dzpt.entity;
 import java.util.Date;
 
 public class AnalysisCertificate {
-    private int id;
-    private String image;
-    private Date createDate;
-    private int listedGoodsId;
 
-    public int getId() {
-        return id;
-    }
+  private int id;
+  private String image;
+  private Date createDate;
+  private int listedGoodsId;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public String getImage() {
-        return image;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setImage(String image) {
-        this.image = image == null ? null : image.trim();
-    }
+  public String getImage() {
+    return image;
+  }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+  public void setImage(String image) {
+    this.image = image == null ? null : image.trim();
+  }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+  public Date getCreateDate() {
+    return createDate;
+  }
 
-    public int getListedGoodsId() {
-        return listedGoodsId;
-    }
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
+  }
 
-    public void setListedGoodsId(int listedGoodsId) {
-        this.listedGoodsId = listedGoodsId;
-    }
+  public int getListedGoodsId() {
+    return listedGoodsId;
+  }
+
+  public void setListedGoodsId(int listedGoodsId) {
+    this.listedGoodsId = listedGoodsId;
+  }
 }

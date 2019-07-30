@@ -1,120 +1,123 @@
 package com.ourteam.dzpt.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
+import javax.validation.constraints.NotBlank;
 
 public class User {
 
-    public interface Default{}
-    public interface Info{}
+  public interface Default {
 
-    private int id;
-    @NotBlank(message="用户名不能为空",groups = {Default.class})
-    private String userName;
+  }
 
-    @NotBlank(message = "密码不能为空",groups = {Default.class})
-    private String password;
+  public interface Info {
 
-    @NotBlank(message = "电话号码不能为空",groups = {Info.class})
-    private String phone;
+  }
 
-    @NotBlank(message = "邮箱不能为空",groups = {Info.class})
-    private String email;
+  private int id;
+  @NotBlank(message = "用户名不能为空", groups = {Default.class})
+  private String userName;
 
-    @NotBlank(message = "公司名称不能为空",groups = {Info.class})
-    private String companyName;
+  @NotBlank(message = "密码不能为空", groups = {Default.class})
+  private String password;
 
-    @NotBlank(message = "地址不能不空",groups = {Info.class})
-    private String address;
+  @NotBlank(message = "电话号码不能为空", groups = {Info.class})
+  private String phone;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date createDate;
+  @NotBlank(message = "邮箱不能为空", groups = {Info.class})
+  private String email;
 
-    private int admin=0;
-    private int ifBan=0;
+  @NotBlank(message = "公司名称不能为空", groups = {Info.class})
+  private String companyName;
 
-    public int getId() {
-        return id;
-    }
+  @NotBlank(message = "地址不能不空", groups = {Info.class})
+  private String address;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date createDate;
 
-    public String getUserName() {
-        return userName;
-    }
+  private int admin = 0;
+  private int ifBan = 0;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public String getPhone() {
-        return phone;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public String getPhone() {
+    return phone;
+  }
 
-    public String getCompanyName() {
-        return companyName;
-    }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public String getAddress() {
-        return address;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+  public String getCompanyName() {
+    return companyName;
+  }
 
-    public int getIfBan() {
-        return ifBan;
-    }
+  public void setCompanyName(String companyName) {
+    this.companyName = companyName;
+  }
 
-    public void setIfBan(int ifBan) {
-        this.ifBan = ifBan;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+  public int getIfBan() {
+    return ifBan;
+  }
 
-    public int getAdmin() {
-        return admin;
-    }
+  public void setIfBan(int ifBan) {
+    this.ifBan = ifBan;
+  }
 
-    public void setAdmin(int admin) {
-        this.admin = admin;
-    }
+  public Date getCreateDate() {
+    return createDate;
+  }
+
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
+  }
+
+  public int getAdmin() {
+    return admin;
+  }
+
+  public void setAdmin(int admin) {
+    this.admin = admin;
+  }
 
 
 }
