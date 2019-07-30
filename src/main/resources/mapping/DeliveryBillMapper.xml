@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ourteam.dzpt.mapper.DeliveryBillMapper">
+  <select id="selectDeliveryByTid" parameterType="integer"
+    resultType="com.ourteam.dzpt.entity.DeliveryBill">select * from deliveryBill where tradeBillId=#{tid}</select>
+
+  <update id="ifReceive" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
+        update deliveryBill set isReceive=ture,status=#{status} where id=(select deliveryBill.id from tradeBill,deliveryBill where listedGoodsId=#{listedGoodsId}
+          and tradeBill.id=tradeBillId)
+    </update>
+
+  <update id="ifDeliver" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
+        update deliveryBill set isDeliver=ture,status=#{status} where id=(select deliveryBill.id from tradeBill,deliveryBill where listedGoodsId=#{listedGoodsId}
+          and tradeBill.id=tradeBillId)
+    </update>
+
+  <update id="requireReturn" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
+        update deliveryBill set isReturn=ture,status=#{status} where tradeBillId=#{tradeBillId}
+    </update>
+
+  <update id="agreeReturn" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
+        update deliveryBill set isAgree=ture,status=#{status} where tradeBillId=#{tradeBillId}
+    </update>
+
+  <update id="confirmReturn" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
+        update deliveryBill set isConfirm=ture,status=#{status} where tradeBillId=#{tradeBillId}
+    </update>
+
+  <insert id="createDelivery">
+    insert into deliveryBill set goodsName=#{goodsName},deliveryWay=#{deliveryWay},address=#{address},status=#{status},isReceive=#{isReceive},isDeliver=#{isDeliver},
+      tradeBillId=#{tradeBillId},createDate=#{createDate},isReturn=#{isReturn},isAgree=#{isAgree},isConfirm=#{isConfirm}
+  </insert>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ourteam.dzpt.mapper.AgreementMapper">
+  <select id="getAgreementInfo" parameterType="integer"
+    resultType="com.ourteam.dzpt.entity.Agreement">select * from agreement where tradeBillId=#{tradeId}</select>
+
+  <select id="getQISInfo" parameterType="integer" resultType="com.ourteam.dzpt.entity.Agreement">
+        select * from analysisCertificate where listedGoodsId=#{listedGoodsId}
+    </select>
+
+  <update id="setBuyerSign" parameterType="com.ourteam.dzpt.entity.Agreement">
+        update agreement set status=#{status},buyerSign=#{buyerSign} where tradeBillId=#{tradeBillId}
+    </update>
+
+  <update id="setSellerSign" parameterType="com.ourteam.dzpt.entity.Agreement">
+        update agreement set status=#{status},sellerSign=#{sellerSign} where tradeBillId=#{tradeBillId}
+    </update>
+
+  <insert id="createAgreement">
+        insert into agreement set buyerSign=#{buyerSign},sellerSign=#{sellerSign},createDate=#{createDate},status=#{status},tradeBillId=#{tradeBillId}
+    </insert>
+</mapper>
