@@ -12,6 +12,7 @@
         <result column="price" property="price"/>
         <result column="region" property="region"/>
         <result column="quality" property="quality"/>
+        <result column="hangtype" property="hangType"/>
         <result column="createDate" property="createDate"/>
     </resultMap>
 
@@ -47,7 +48,7 @@
     </update>
 
     <insert id="hangNow" parameterType="ListedGoods">
-        insert into listedGoods set hangtype=#{hangtype},goodsName=#{goodsName},
+        insert into listedGoods set hangtype=#{hangType},goodsName=#{goodsName},
         `type`=#{type},amount=#{amount},unit=#{unit},price=#{price},region=#{region},
         quality=#{quality},ismatch=#{ismatch},supplier=#{supplier},createDate=#{createDate}
     </insert>
@@ -56,15 +57,24 @@
         delete from listedGoods where id=#{listedGoodsId}
     </delete>
 
-    <select id="getHangListByType" parameterType="integer" resultMap="hangInfoMap">
-        select supplier,id,goodsName,type,amount,unit,price,region,quality,createDate
-        from listedGoods where hangtype=#{hangtype}
+    <select id="getHangListByType" parameterType="String" resultMap="hangInfoMap">
+        select supplier,listedGoods.id id,userName supplierName,goodsName,type,amount,unit,price,region,quality,listedGoods.createDate
+        from listedGoods,user where hangtype=#{hangType} and supplier = user.id and status=0
     </select>
     <select id="getMyHangList" parameterType="integer" resultMap="hangInfoMap">
-        select supplier,id,goodsName,type,amount,unit,price,region,quality,createDate
-        from listedGoods where supplier=#{supplier}
+        select supplier,id,goodsName,type,amount,unit,price,region,quality,createDate,hangtype
+        from listedGoods where supplier=#{supplier} and status = 0
     </select>
     <select id="searchSupplierById" parameterType="integer" resultType="integer">
         select supplier from listedGoods where id=#{id}
     </select>
+    <select id="getListedGoodsInfo" parameterType="integer" resultType="ListedGoods">
+        select * from listedGoods where id=#{id}
+    </select>
+    <select id="getListedGoodsInfoByMap" parameterType="integer" resultType="Map">
+        select * from listedGoods where id=#{id}
+    </select>
+    <update id="changeStatus" parameterType="integer">
+        update listedGoods set status=#{status} where id=#{id}
+    </update>
 </mapper>

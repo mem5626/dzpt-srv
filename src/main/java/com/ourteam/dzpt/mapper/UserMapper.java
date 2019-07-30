@@ -12,7 +12,7 @@ public interface UserMapper {
     User selectByName(String name);
     Map getUserInfo(String name);
     List<Map> selectAll();
-    int delete(String userName);
+    int delete(int id);
     int create(User user);
     int updateInfo(User user);
     int updatePassword(User user);

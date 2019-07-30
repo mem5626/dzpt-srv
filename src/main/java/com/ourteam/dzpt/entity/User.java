@@ -1,7 +1,10 @@
 package com.ourteam.dzpt.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 public class User {
 
@@ -27,7 +30,9 @@ public class User {
     @NotBlank(message = "地址不能不空",groups = {Info.class})
     private String address;
 
-    private String createDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date createDate;
+
     private int admin=0;
     private int ifBan=0;
 
@@ -95,11 +100,11 @@ public class User {
         this.ifBan = ifBan;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 

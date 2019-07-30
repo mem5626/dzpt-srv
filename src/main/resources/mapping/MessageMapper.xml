@@ -8,7 +8,17 @@
     <delete id="deleteMessage" parameterType="integer">
         delete from message where id=#{id}
     </delete>
-    <select id="getMessageList" parameterType="integer" resultType="Message">
-        select * from message where receiver=#{uid} and type=#{type}
+    <select id="getMessageList" parameterType="integer" resultType="Map">
+        select message.id id, type, title, content, message.createDate, userName senderName from message,user where receiver=#{uid} and sender = user.id;
     </select>
+    <insert id="createSystemMsg" parameterType="SystemMsg">
+        insert into systemMsg set title=#{title},content=#{content},createDate=#{createDate}
+    </insert>
+    <select id="getSystemMsgList" resultType="SystemMsg">
+        select * from systemMsg
+    </select>
+    <insert id="createNegotiate" parameterType="Negotiate">
+        insert into negotiate set status=#{status},currentPrice=#{currentPrice},
+        createDate=#{createDate},tradeBillId=#{tradeBillId}
+    </insert>
 </mapper>

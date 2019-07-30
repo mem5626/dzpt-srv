@@ -36,19 +36,23 @@ public class ListedGoodsService {
     }
 
     public int deleteHangGood(int listedGoodsId, Integer uid) {
-        if (listedGoodsMapper.searchSupplierById(listedGoodsId) != uid)
+        if (!listedGoodsMapper.searchSupplierById(listedGoodsId).equals(uid))
             throw new GlobalException(ExceptionMsg.NotAllow);
         return listedGoodsMapper.deleteHangGood(listedGoodsId);
     }
 
-    public List<Map> getHangListByType(int hangtype) throws Exception {
+    public List<Map> getHangListByType(String hangtype){
         return listedGoodsMapper.getHangListByType(hangtype);
     }
 
-    public List<Map> getMyHangList(String userName, int uid) throws Exception {
-        User user = userMapper.selectByName(userName);
-        if (user.getId() <= 0) throw new GlobalException(ExceptionMsg.ParameterError);
-        if (user.getId() != uid) throw new GlobalException(ExceptionMsg.NotAllow);
+    public List<Map> getMyHangList(Integer userId, int uid){
+        if (userId != uid) throw new GlobalException(ExceptionMsg.NotAllow);
         return listedGoodsMapper.getMyHangList(uid);
+    }
+
+    public Map searchHangGood(int id){
+         Map map = listedGoodsMapper.getListedGoodsInfoByMap(id);
+         map.put("supplierName",userMapper.selectById((Integer)map.get("supplier")).getUserName());
+         return map;
     }
 }

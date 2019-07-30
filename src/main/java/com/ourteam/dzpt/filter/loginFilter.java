@@ -35,7 +35,7 @@ public class loginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             try {
-                System.out.print(session);
+                System.out.println(session);
                 returnJson((HttpServletResponse) servletResponse, new Response(ExceptionMsg.NotLogin).toString());
             } catch (Exception e) {
                 logger.error("response error", e);

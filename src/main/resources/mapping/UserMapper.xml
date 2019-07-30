@@ -17,7 +17,7 @@
     <select id="getUserInfo" resultMap="UserInfoMap" parameterType="STRING">select id,userName,phone,email,companyName,address,createDate from user where userName=#{userName}</select>
     <select id="selectByName" resultType="com.ourteam.dzpt.entity.User" parameterType="STRING">select * from user where userName = #{userName}</select>
 
-    <delete id="delete" parameterType="STRING">delete from user where userName=#{userName}</delete>
+    <delete id="delete" parameterType="integer">delete from user where id=#{id}</delete>
     <update id="updateInfo" parameterType="com.ourteam.dzpt.entity.User">
         UPDATE user SET
         <trim suffix="" suffixOverrides=",">
@@ -25,10 +25,10 @@
                 phone = #{phone},
             </if>
             <if test="email!=null and email!=''">
-                email = #{email}
+                email = #{email},
             </if>
             <if test="address!=null and address!=''">
-                address = #{address}
+                address = #{address},
             </if>
         </trim>
         WHERE id=#{id}

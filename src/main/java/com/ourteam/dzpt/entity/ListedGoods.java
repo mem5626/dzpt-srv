@@ -12,7 +12,6 @@ public class ListedGoods {
     public interface ListedGoodsCreate {
     }
 
-    @NotBlank(message = "挂牌号不能为空")
     private Integer id;
     @NotBlank(message = "商品名不能为空", groups = ListedGoodsInfo.class)
     private String goodsName;
@@ -29,11 +28,13 @@ public class ListedGoods {
     @NotBlank(message = "商品类型不能为空", groups = ListedGoodsInfo.class)
     private String type;
     @NotNull(message = "来源地不能为空", groups = ListedGoodsInfo.class)
-    private Integer region;
+    private String region;
     @NotNull(message = "挂牌类型不能为空", groups = ListedGoodsCreate.class)
-    private Integer hangtype;
-    @NotNull(message = "请选择是否允许撮合交易", groups = ListedGoodsInfo.class)
+    private String hangType;
+    @NotNull(message = "请选择是否允许撮合交易", groups = ListedGoodsCreate.class)
     private Boolean ismatch;
+    private Integer status;
+
 
     private String createDate;
     private String billNumber;
@@ -119,20 +120,20 @@ public class ListedGoods {
         this.type = type;
     }
 
-    public Integer getRegion() {
+    public String getRegion() {
         return region;
     }
 
-    public void setRegion(Integer region) {
+    public void setRegion(String region) {
         this.region = region;
     }
 
-    public Integer getHangtype() {
-        return hangtype;
+    public String getHangType() {
+        return hangType;
     }
 
-    public void setHangtype(Integer hangtype) {
-        this.hangtype = hangtype;
+    public void setHangType(String hangtype) {
+        this.hangType = hangtype;
     }
 
     public Boolean getIsmatch() {
@@ -141,6 +142,14 @@ public class ListedGoods {
 
     public void setIsmatch(Boolean ismatch) {
         this.ismatch = ismatch;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
 }

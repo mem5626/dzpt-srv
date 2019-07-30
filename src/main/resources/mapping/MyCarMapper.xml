@@ -6,14 +6,17 @@
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
     </resultMap>
 
-    <delete id="deleteByGoodsId" parameterType="java.lang.Integer" >
+    <delete id="deleteByGoodsId" parameterType="MyCar" >
     delete from myCar
-    where listedGoodsId = #{listedGoodsId,jdbcType=INTEGER}
+    where listedGoodsId = #{listedGoodsId} and userId = #{userId}
     </delete>
 
-    <insert id="insert" parameterType="com.ourteam.dzpt.entity.MyCar" >
-    insert into myCar (listedGoodsId, createDate)
-    values (#{listedGoodsId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="MyCar" >
+    insert into myCar set userId=#{userId},listedGoodsId=#{listedGoodsId},createDate=#{createDate}
     </insert>
 
+    <select id="getMyCar" parameterType="integer" resultType="Map">
+        select amount,price,userName supplierName,goodsName,listedGoodsId,myCar.createDate from myCar,listedGoods,user where userId=#{userId}
+        and listedGoods.id = listedGoodsId and listedGoods.supplier = user.id
+    </select>
 </mapper>

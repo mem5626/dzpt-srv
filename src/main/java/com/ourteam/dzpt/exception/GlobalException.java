@@ -10,7 +10,7 @@ public class GlobalException extends RuntimeException {
         this.code = exceptionMsg.getCode();
     }
 
-    public GlobalException(String msg, String code) {
+    public GlobalException(String code, String msg) {
         super(msg);
         this.code = code;
     }

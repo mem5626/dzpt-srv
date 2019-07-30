@@ -9,7 +9,7 @@ public class Message {
     @NotNull(message = "接受方不能为空")
     int receiver;
     @NotNull(message = "类型不能为空")
-    int type;
+    String type;
     @NotNull(message = "标题不能为空")
     String title;
     @NotNull(message = "内容不能为空")
@@ -40,11 +40,11 @@ public class Message {
         this.receiver = receiver;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

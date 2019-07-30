@@ -7,7 +7,8 @@ public enum  ExceptionMsg {
     UserNameOccupied("E0002","用户名已存在"),
     UserNotExist("E0003","用户不存在"),
     NotLogin("E0004","未登录"),
-    NotAllow("E0005","没有权限");
+    NotAllow("E0005","没有权限"),
+    OrderExist("E0006","订单已存在");
 
     private String code;
     private String msg;

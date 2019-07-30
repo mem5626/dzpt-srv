@@ -3,12 +3,12 @@
 <mapper namespace="com.ourteam.dzpt.mapper.AccountMapper">
     
     <select id="getBalanceByUid" parameterType="integer" resultType="integer">select balance from account where userId = #{uesrId}</select>
-    <select id="selectAccountByUid" parameterType="integer" resultType="com.ourteam.dzpt.entity.Account">select * from account where userId=#{uid}</select>
-    <update id="setPassword" parameterType="com.ourteam.dzpt.entity.Account">
+    <select id="selectAccountByUid" parameterType="integer" resultType="Account">select * from account where userId=#{uid}</select>
+    <update id="setPassword" parameterType="Account">
         update account set payPassword = #{payPassword} where userId = #{userId}
     </update>
-    <update id="updateAccount" parameterType="com.ourteam.dzpt.entity.Account">
+    <update id="updateAccount" parameterType="Account">
         update account set balance=#{balance} where userId=#{userId}
     </update>
-    <insert id="createAccount">insert into account set payPassword=#{payPassword},userId=#{userId},balance=#{balance}</insert>
+    <insert id="createAccount" parameterType="Account">insert into account set payPassword=#{payPassword},userId=#{userId},balance=#{balance}</insert>
 </mapper>

@@ -1,6 +1,7 @@
 package com.ourteam.dzpt.controller;
 
 import com.ourteam.dzpt.entity.ExceptionMsg;
+import com.ourteam.dzpt.entity.MyCar;
 import com.ourteam.dzpt.entity.Response;
 import com.ourteam.dzpt.entity.User;
 import com.ourteam.dzpt.exception.GlobalException;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
 
     @RequestMapping(value = "/user/getUserList", method = RequestMethod.GET)
     public Response selectUsers() throws GlobalException {
@@ -55,7 +57,9 @@ public class UserController {
             //判断密码是否正确
             if (targetUser.getPassword().equals(Md5Password)) {
                 request.getSession().setAttribute("uid", targetUser.getId());
-                return new Response(ExceptionMsg.Success);
+                Map<String,Integer> map = new HashMap<>();
+                map.put("userId",userService.selectByName(user.getUserName()).getId());
+                return new Response(ExceptionMsg.Success,map);
             } else {
                 return new Response(ExceptionMsg.Error);
             }
@@ -82,15 +86,15 @@ public class UserController {
 
     @RequestMapping(value = "/user/updatePassword")
     public Response updatePassword(HttpServletRequest request, @RequestBody Map<String, String> info) throws GlobalException {
-//        int id = (int)request.getSession().getAttribute("uid");
-        info.put("id", 4 + "");
+        int id = (int)request.getSession().getAttribute("uid");
+        info.put("id", id+"");
         if (userService.updatePassword(info) == 0) return new Response(ExceptionMsg.Error);
         else return new Response(ExceptionMsg.Success);
     }
 
     @RequestMapping(value = "/user/deleteUser")
     public Response deleteUser(HttpServletRequest request, @RequestBody User user) throws GlobalException {
-        if (userService.deleteUser(user.getUserName()) == 1) return new Response(ExceptionMsg.Success);
+        if (userService.deleteUser(user.getId()) == 1) return new Response(ExceptionMsg.Success);
         else return new Response(ExceptionMsg.Error);
     }
 
@@ -105,5 +109,31 @@ public class UserController {
         HashMap<String, List> map = new HashMap<String, List>();
         map.put("banList", userService.getBanList());
         return new Response(ExceptionMsg.Success, map);
+    }
+
+    @RequestMapping(value = "/mine/getMyCar",method = RequestMethod.GET)
+    public Response getMyCar(HttpServletRequest request) throws GlobalException{
+        int id = (int)request.getSession().getAttribute("uid");
+        HashMap<String,List> map = new HashMap<>();
+        map.put("goodsList",userService.getMyCar(id));
+        return new Response(ExceptionMsg.Success,map);
+    }
+
+    @RequestMapping(value = "/mine/deleteMyCar",method = RequestMethod.POST)
+    public Response deleteMyCar(HttpServletRequest request, @RequestBody @Validated MyCar myCar,
+                                BindingResult br) throws Exception{
+        if (br.hasErrors()) return new Response("E0001", br.getFieldError().getDefaultMessage());
+        int id = (int)request.getSession().getAttribute("uid");
+        if(userService.deleteByGoodsId(myCar,id)==1) return new Response(ExceptionMsg.Success);
+        else return new Response(ExceptionMsg.Error);
+    }
+
+    @RequestMapping(value = "/mine/addMyCar",method = RequestMethod.POST)
+    public Response addMyCar(HttpServletRequest request,@RequestBody @Validated MyCar myCar,
+                             BindingResult br)throws Exception{
+        if (br.hasErrors()) return new Response("E0001", br.getFieldError().getDefaultMessage());
+        int id = (int)request.getSession().getAttribute("uid");
+        if(userService.insertIntoMyCar(myCar,id)==1) return new Response(ExceptionMsg.Success);
+        else return new Response(ExceptionMsg.Error);
     }
 }

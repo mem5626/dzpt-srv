@@ -16,7 +16,13 @@ public interface ListedGoodsMapper {
 
     Integer searchSupplierById(int id);
 
-    List<Map> getHangListByType(int hangtype);
+    List<Map> getHangListByType(String hangtype);
 
     List<Map> getMyHangList(int supplier);
+
+    ListedGoods getListedGoodsInfo(int id);
+
+    Map getListedGoodsInfoByMap(int id);
+
+    Integer changeStatus(int id, int status);
 }
