@@ -1,13 +1,14 @@
 package com.ourteam.dzpt.mapper;
 
 import com.ourteam.dzpt.entity.Agreement;
+import com.ourteam.dzpt.entity.AnalysisCertificate;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AgreementMapper {
 
-  Map getAgreementInfo(int tradeId);
+  Agreement getAgreementInfo(int tradeId);
 
   int createAgreement(Agreement agreement);
 
@@ -15,5 +16,5 @@ public interface AgreementMapper {
 
   int setSellerSign(Agreement agreement);
 
-  Map getQISInfo(int listedGoodsId);
+  AnalysisCertificate getQISInfo(int listedGoodsId);
 }

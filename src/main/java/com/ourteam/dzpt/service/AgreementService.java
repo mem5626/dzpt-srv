@@ -1,6 +1,7 @@
 package com.ourteam.dzpt.service;
 
 import com.ourteam.dzpt.entity.Agreement;
+import com.ourteam.dzpt.entity.AnalysisCertificate;
 import com.ourteam.dzpt.mapper.AgreementMapper;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -21,11 +22,11 @@ public class AgreementService {
     return agreementMapper.createAgreement(agreement);
   }
 
-  public Map getAgreementInfo(int tradeId) {
+  public Agreement getAgreementInfo(int tradeId) {
     return agreementMapper.getAgreementInfo(tradeId);
   }
 
-  public Map getQISInfo(int listedGoodsId) {
+  public AnalysisCertificate getQISInfo(int listedGoodsId) {
     return agreementMapper.getQISInfo(listedGoodsId);
   }
 
