@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ourteam.dzpt.mapper.OrderMapper">
+    <insert id="createOrder" parameterType="Order">
+        insert into `order` (id,status,createDate,amount,price,goodsName,tradeBillId,deposit,serviceCharge)
+        values (#{id},#{status},#{createDate},#{amount},#{price},#{goodsName},#{tradeBillId},#{deposit},#{serviceCharge});
+    </insert>
+    <update id="cancelOrder" parameterType="integer">
+        update `order` set status = -1 where id=#{id}
+    </update>
+    <select id="getOrderInfo" parameterType="integer" resultType="Map">
+        select `order`.id orderId,
+               `order`.goodsName,
+               deposit,
+               serviceCharge,
+               `order`.amount,
+               `order`.price,
+                user1.id buyer,
+                user2.id seller,
+                user1.phone phone,
+                user1.address address,
+                `order`.status,
+                user1.userName buyerName,
+                user2.userName sellerName,
+                `order`.tradeBillId tradingId,
+                `order`.createDate,
+                 listedGoods.region
+        from listedGoods,tradeBill,`order`,user user1,user user2
+        where listedGoods.id = #{id} and tradeBill.listedGoodsId = #{id}
+        and tradeBill.id = `order`.tradeBillId and user1.id = tradeBill.buyer
+        and user2.id = tradeBill.seller
+    </select>
+    <select id="selectOrderById" resultType="Order" parameterType="integer">
+        select * from `order` where id = #{id}
+    </select>
+    <update id="affirmOrder" parameterType="integer">
+        update `order` set status = #{status} where id = #{id}
+    </update>
+</mapper>
