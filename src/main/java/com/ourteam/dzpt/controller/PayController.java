@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Map;
 
 @RestController
 public class PayController {
@@ -22,44 +24,35 @@ public class PayController {
     @Autowired
     private BillService billService;
 
-    @RequestMapping(value = "/pay/verify", method = RequestMethod.POST)
-    public Response verifyPassword(HttpServletRequest request, @Validated(value = Account.Default.class) @RequestBody Account account,
-                                   BindingResult br) throws GlobalException{
-        if (br.hasErrors()) return new Response("E0001", br.getFieldError().getDefaultMessage());
-        Account targetAccount= accountService.getAccountByUid(account.getUserId());
+
+
+    @RequestMapping(value = "/pay/commit", method = RequestMethod.POST)
+    public Response pay(HttpServletRequest request, @RequestBody Map<String,String> info) throws GlobalException {
+        //先验证密码，(判断是否需要银行转账，转账)成功则更新账单，检测用户余额与当前余额是否一致，不一致则更新余额。
+
+        Account targetAccount= accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
         if (targetAccount == null) return new Response(ExceptionMsg.UserNotExist);
         else {
-            String Md5Password = MD5Util.stringToMD5(account.getPayPassword());
             //判断密码是否正确
-            if (targetAccount.getPayPassword().equals(Md5Password)) {
+            if (targetAccount.getPayPassword().equals(info.get("payPassword"))) {
+                Bill bill=new Bill();
+                bill.setUserId(Integer.parseInt(info.get("userId")));
+                bill.setBalance(Integer.parseInt(info.get("balance")));
+                bill.setMoney(Integer.parseInt(info.get("money")));
+                bill.setDrcrflg(Integer.parseInt(info.get("drcrflg")));
+                bill.setTradeType(Integer.parseInt(info.get("tradeType")));
+                bill.setTradeWay(Integer.parseInt(info.get("tradeWay")));
+                bill.setTradeWayName(info.get("tradeWayName"));
+                bill.setOrderId(Integer.parseInt(info.get("orderId")));
+                billService.addBill(bill);
+                if(!info.get("balance").equals(targetAccount.getBalacne())){
+                    targetAccount.setBalacne(bill.getBalance());
+                    accountService.updateBalance(targetAccount);
+                }
                 return new Response(ExceptionMsg.Success);
             } else {
                 return new Response(ExceptionMsg.Error);
             }
         }
-    }
-
-    @RequestMapping(value = "/pay/commit", method = RequestMethod.POST)
-    public Response AddBill(HttpServletRequest request, @RequestBody Bill payerBill,@RequestBody Bill receiverBill) {
-        if (payerBill != null && receiverBill != null) {
-            if ((billService.addBill(payerBill) == 1) && (billService.addBill(receiverBill) == 1)) {
-                return new Response(ExceptionMsg.Success);
-            } else {
-                return new Response(ExceptionMsg.Error);
-            }
-        } else if (payerBill != null) {
-            if (billService.addBill(payerBill) == 1)
-                return new Response(ExceptionMsg.Success);
-            else {
-                return new Response(ExceptionMsg.Error);
-            }
-        } else if (receiverBill !=null){
-            if (billService.addBill(receiverBill) == 1)
-                return new Response(ExceptionMsg.Success);
-            else {
-                return new Response(ExceptionMsg.Error);
-            }
-        } else return new Response(ExceptionMsg.Error);
-
     }
 }

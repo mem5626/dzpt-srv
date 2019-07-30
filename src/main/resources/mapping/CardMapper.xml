@@ -13,7 +13,7 @@
 
     <delete id="deleteById" parameterType="INTEGER">delete from card where id=#{id}</delete>
 
-    <insert id="addCard" parameterType="com.ourteam.dzpt.entity.Card" >insert into card set cardNumber=#{card.cardNumber},userId=#{card.userId},bank=#{card.bank},bindTime=#{card.bindTime}</insert>
+    <insert id="addCard" parameterType="com.ourteam.dzpt.entity.Card" >insert into card set cardNumber=#{cardNumber},userId=#{userId},bank=#{bank},bindTime=#{bindTime}</insert>
 
     <update id="updateCard" parameterType="com.ourteam.dzpt.entity.Card">
         update card set cardNumber=#{cardNumber},bank=#{bank} where userId=#{userId}

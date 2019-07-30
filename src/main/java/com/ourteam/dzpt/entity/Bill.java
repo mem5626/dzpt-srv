@@ -10,7 +10,8 @@ public class Bill {
     private Integer money;
     private Integer balance;
     private Integer drcrflg;
-    private String tradeWay;
+    private Integer tradeWay;
+    private String tradeWayName;
     private Integer tradeType;
     private Integer orderId;
 
@@ -57,12 +58,20 @@ public class Bill {
         this.drcrflg = drcrflg;
     }
 
-    public String getTradeWay() {
+    public Integer getTradeWay() {
         return tradeWay;
     }
 
-    public void setTradeWay(String tradeWay) {
+    public void setTradeWay(Integer tradeWay) {
         this.tradeWay = tradeWay;
+    }
+
+    public String getTradeWayName() {
+        return tradeWayName;
+    }
+
+    public void setTradeWayName(String tradeWayName) {
+        this.tradeWayName = tradeWayName;
     }
 
     public Integer getTradeType() {
@@ -88,6 +97,10 @@ public class Bill {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+
+
+
 
 
 

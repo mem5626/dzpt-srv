@@ -20,12 +20,12 @@
 
     <insert id="createBill" parameterType="com.ourteam.dzpt.entity.Bill" >
     insert into bill (userId,
-      money, balance, drcrflg, tradeWay, tradeType,
+      money, balance, drcrflg, tradeWay, tradeTypeName,tradeType,
       orderId,  createDate
       )
     values (#{userId,jdbcType=INTEGER},
-      #{money,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, #{drcrflg,jdbcType=TINYINT}, #{tradeWay,jdbcType=VARCHAR}, #{tradeType,jdbcType=INTEGER},
-      #{orderId,jdbcType=INTEGER}, #{createDate,jdbcType=DATETIME}
+      #{money,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, #{drcrflg,jdbcType=TINYINT}, #{tradeWay}, #{tradeWayName,jdbcType=VARCHAR}, #{tradeType,jdbcType=INTEGER},
+      #{orderId,jdbcType=INTEGER}, #{createDate}
       )
     </insert>
 
@@ -35,9 +35,10 @@
         balance = #{balance,jdbcType=INTEGER},
         drcrflg = #{drcrflg,jdbcType=TINYINT},
         money = #{money,jdbcType=INTEGER},
-        tradeWay = #{tradeWay,jdbcType=VARCHAR},
+        tradeWay = #{tradeWay},
+        tradeWayName = #{tradeWayName},
         tradeType = #{tradeType,jdbcType=INTEGER},
         orderId = #{orderId,jdbcType=INTEGER},
-        createDate = #{createDate,jdbcType=DATETIME}
+        createDate = #{createDate}
     </update>
 </mapper>
