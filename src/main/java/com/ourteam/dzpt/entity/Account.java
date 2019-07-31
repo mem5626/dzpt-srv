@@ -4,39 +4,38 @@ import javax.validation.constraints.NotBlank;
 
 public class Account {
 
-  public interface Default {
+    public interface Default{}
 
-  }
+    @NotBlank(message = "用户id不能为空",groups = {Account.Default.class})
+    private int userId;
 
-  @NotBlank(message = "用户id不能为空", groups = {Account.Default.class})
-  private int userId;
+    @NotBlank(message = "密码不能为空",groups = {Account.Default.class})
+    private String payPassword;
 
-  @NotBlank(message = "密码不能为空", groups = {Account.Default.class})
-  private String payPassword;
+    private long balance;
 
-  private long balacne;
+    public long getBalance() {
+        return balance;
+    }
 
-  public int getUserId() {
-    return userId;
-  }
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
 
-  public void setUserId(int userId) {
-    this.userId = userId;
-  }
+    public int getUserId() {
+        return userId;
+    }
 
-  public String getPayPassword() {
-    return payPassword;
-  }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-  public void setPayPassword(String payPassword) {
-    this.payPassword = payPassword;
-  }
+    public String getPayPassword() {
+        return payPassword;
+    }
 
-  public long getBalacne() {
-    return balacne;
-  }
+    public void setPayPassword(String payPassword) {
+        this.payPassword = payPassword;
+    }
 
-  public void setBalacne(long balacne) {
-    this.balacne = balacne;
-  }
 }

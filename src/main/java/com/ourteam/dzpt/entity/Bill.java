@@ -1,102 +1,108 @@
 package com.ourteam.dzpt.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Bill {
+    private Integer id;
+    private Integer userId;
+    private Integer money;
+    private Integer balance;
+    private Integer drcrflg;
+    private Integer tradeWay;
+    private String tradeWayName;
+    private Integer tradeType;
 
-  private Integer id;
-  private Integer userId;
-  private Integer money;
-  private Integer balance;
-  private Integer drcrflg;
-  private Integer tradeWay;
-  private String tradeWayName;
-  private Integer tradeType;
-  private Integer orderId;
+    public Integer getTradeId() {
+        return tradeId;
+    }
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createDate;
+    public void setTradeId(Integer tradeId) {
+        this.tradeId = tradeId;
+    }
 
-  public Integer getId() {
-    return id;
-  }
+    private Integer tradeId;
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date createDate;
 
-  public Integer getUserId() {
-    return userId;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public Integer getMoney() {
-    return money;
-  }
+    public Integer getUserId() {
+        return userId;
+    }
 
-  public void setMoney(Integer money) {
-    this.money = money;
-  }
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-  public Integer getBalance() {
-    return balance;
-  }
+    public Integer getMoney() {
+        return money;
+    }
 
-  public void setBalance(Integer balance) {
-    this.balance = balance;
-  }
+    public void setMoney(Integer money) {
+        this.money = money;
+    }
 
-  public Integer getDrcrflg() {
-    return drcrflg;
-  }
+    public Integer getBalance() {
+        return balance;
+    }
 
-  public void setDrcrflg(Integer drcrflg) {
-    this.drcrflg = drcrflg;
-  }
+    public void setBalance(Integer balance) {
+        this.balance = balance;
+    }
 
-  public Integer getTradeWay() {
-    return tradeWay;
-  }
+    public Integer getDrcrflg() {
+        return drcrflg;
+    }
 
-  public void setTradeWay(Integer tradeWay) {
-    this.tradeWay = tradeWay;
-  }
+    public void setDrcrflg(Integer drcrflg) {
+        this.drcrflg = drcrflg;
+    }
 
-  public String getTradeWayName() {
-    return tradeWayName;
-  }
+    public Integer getTradeWay() {
+        return tradeWay;
+    }
 
-  public void setTradeWayName(String tradeWayName) {
-    this.tradeWayName = tradeWayName;
-  }
+    public void setTradeWay(Integer tradeWay) {
+        this.tradeWay = tradeWay;
+    }
 
-  public Integer getTradeType() {
-    return tradeType;
-  }
+    public String getTradeWayName() {
+        return tradeWayName;
+    }
 
-  public void setTradeType(Integer tradeType) {
-    this.tradeType = tradeType;
-  }
+    public void setTradeWayName(String tradeWayName) {
+        this.tradeWayName = tradeWayName;
+    }
 
-  public Integer getOrderId() {
-    return orderId;
-  }
+    public Integer getTradeType() {
+        return tradeType;
+    }
 
-  public void setOrderId(Integer orderId) {
-    this.orderId = orderId;
-  }
+    public void setTradeType(Integer tradeType) {
+        this.tradeType = tradeType;
+    }
 
-  public Date getCreateDate() {
-    return createDate;
-  }
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-  public void setCreateDate(Date createDate) {
-    this.createDate = createDate;
-  }
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+
+
+
+
 
 
 }
