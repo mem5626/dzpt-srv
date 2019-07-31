@@ -79,7 +79,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/account/updatePassword")
+    @RequestMapping(value = "/account/updatePassword", method = RequestMethod.POST)
     public Response updatePassword(HttpServletRequest request, @RequestBody Map<String, String> info) throws GlobalException {
         if (accountService.setPassword(info) == 0) return new Response(ExceptionMsg.Error);
         else return new Response(ExceptionMsg.Success);
