@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -58,7 +59,7 @@ public class MessageController {
       throw new GlobalException(ExceptionMsg.ParameterError);
     }
     int id = (int) request.getSession().getAttribute("uid");
-    if ((Integer)info.get("userId") != id){
+    if ((Integer) info.get("userId") != id) {
       throw new GlobalException(ExceptionMsg.NotAllow);
     }
     if (messageService
@@ -67,6 +68,12 @@ public class MessageController {
     } else {
       throw new GlobalException(ExceptionMsg.Error);
     }
+  }
+
+  @RequestMapping(value = "/setReadMessage")
+  public Response setReadMessage(int messageId) throws Exception {
+    if(messageService.setReadMessage(messageId) == 1) return new Response(ExceptionMsg.Success);
+    else throw new GlobalException(ExceptionMsg.Error);
   }
 
   @RequestMapping("/sendSystemMsg")
@@ -101,6 +108,39 @@ public class MessageController {
       return new Response(ExceptionMsg.Success);
     } else {
       return new Response(ExceptionMsg.Error);
+    }
+  }
+
+  @RequestMapping(value = "/getNegotiate", method = RequestMethod.GET)
+  public Response getNegotiate(Integer id) throws Exception {
+    if (id == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
+    return new Response(ExceptionMsg.Success,
+        messageService.getNegotiate(id));
+  }
+
+  @RequestMapping(value = "/affirm", method = RequestMethod.POST)
+  public Response affirmNegotiate(@RequestBody Map<String, Integer> info) throws Exception {
+    if (info.get("tradingId") == null || info.get("negotiateId") == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
+    if (messageService.affirmNegotiatedId(info.get("tradingId"), info.get("negotiateId")) == 1) {
+      return new Response(ExceptionMsg.Success);
+    } else {
+      throw new GlobalException(ExceptionMsg.Error);
+    }
+  }
+
+  @RequestMapping(value = "/refuse", method = RequestMethod.POST)
+  public Response refuseNegotiate(@RequestBody Map<String, Integer> info) throws Exception {
+    if (info.get("tradingId") == null || info.get("negotiateId") == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
+    if (messageService.refuseNegotiatedId(info.get("tradingId"), info.get("negotiateId")) == 1) {
+      return new Response(ExceptionMsg.Success);
+    } else {
+      throw new GlobalException(ExceptionMsg.Error);
     }
   }
 }

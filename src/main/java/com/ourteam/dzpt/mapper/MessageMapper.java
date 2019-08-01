@@ -3,6 +3,7 @@ package com.ourteam.dzpt.mapper;
 import com.ourteam.dzpt.entity.Message;
 import com.ourteam.dzpt.entity.Negotiate;
 import com.ourteam.dzpt.entity.SystemMsg;
+import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,9 +16,17 @@ public interface MessageMapper {
 
     int deleteMessage(Integer id);
 
+    int setReadMessage(Integer id);
+
     int createSystemMsg(SystemMsg systemMsg);
 
     List<SystemMsg> getSystemMsgList();
 
     int createNegotiate(Negotiate negotiate);
+
+    Map getNegotiate(Integer tradingId);
+
+    Negotiate selectNegotiateById(Integer id);
+
+    int setNegotiateStatus(Integer status, Integer negotiateId);
 }

@@ -6,6 +6,7 @@ import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.mapper.ListedGoodsMapper;
 import com.ourteam.dzpt.mapper.UserMapper;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ListedGoodsService {
     if (!listedGoods.getSupplier().equals(uid)) {
       throw new GlobalException(ExceptionMsg.NotAllow);
     }
-    listedGoods.setCreateDate(LocalDateTime.now().toString());
+    listedGoods.setCreateDate(new Date());
     return listedGoodsMapper.hangNow(listedGoods);
   }
 
@@ -58,6 +59,7 @@ public class ListedGoodsService {
 
   public Map searchHangGood(int id) {
     Map map = listedGoodsMapper.getListedGoodsInfoByMap(id);
+    if (map == null) throw new GlobalException(ExceptionMsg.ListedGoodsNotExist);
     map.put("supplierName", userMapper.selectById((Integer) map.get("supplier")).getUserName());
     return map;
   }

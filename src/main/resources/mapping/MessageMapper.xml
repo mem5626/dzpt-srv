@@ -9,6 +9,9 @@
   <delete id="deleteMessage" parameterType="integer">
         delete from message where id=#{id}
     </delete>
+  <update id="setReadMessage" parameterType="integer">
+         update message set isRead = 1 where id = #{id}
+    </update>
   <select id="getMessageList" parameterType="integer" resultType="Map">
         select message.id id, type, title, content, message.createDate, userName senderName from message,user where receiver=#{uid} and sender = user.id;
     </select>
@@ -22,4 +25,14 @@
         insert into negotiate set status=#{status},currentPrice=#{currentPrice},
         createDate=#{createDate},tradeBillId=#{tradeBillId}
     </insert>
+  <select id="getNegotiate" parameterType="integer" resultType="Map">
+        select price,currentPrice newprice,goodsName,negotiate.id negotiateId from negotiate,listedGoods,tradeBill
+        where tradeBill.id = #{tradingId} and listedGoods.id = tradeBill.listedGoodsId and negotiate.tradeBillId = tradeBill.id
+   </select>
+  <update id="setNegotiateStatus" parameterType="integer">
+        update negotiate set status = #{status} where id = #{negotiateId}
+   </update>
+  <select id="selectNegotiateById" parameterType="integer" resultType="Negotiate">
+    select * from negotiate where id = #{id}
+  </select>
 </mapper>

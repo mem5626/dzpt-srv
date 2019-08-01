@@ -19,4 +19,10 @@ public interface TradeBillMapper {
   int getLastId();
 
   int cancelTradeBill(Integer id);
+
+  int setTradeBillStatus(Integer status, Integer id);
+
+  int countInNegotiateNum(Integer buyer, Integer listedGoodsId);
+
+  int getNowStatus(Integer listedGoodsId);
 }

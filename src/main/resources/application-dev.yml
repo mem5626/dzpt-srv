@@ -14,3 +14,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.ourteam.dzpt.entity
+
+
+logging:
+  path: ./logs/
+  level:
+    root: info

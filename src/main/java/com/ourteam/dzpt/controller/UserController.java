@@ -29,8 +29,8 @@ public class UserController {
   @Autowired
 
   @RequestMapping(value = "/user/getUserList", method = RequestMethod.GET)
-  public Response selectUsers() throws GlobalException {
-    HashMap<String, List> map = new HashMap<String, List>();
+  public Response selectUsers() throws Exception {
+    HashMap<String, List> map = new HashMap();
     map.put("userList", userService.selectAll());
     return new Response(ExceptionMsg.Success, map);
   }
@@ -59,12 +59,12 @@ public class UserController {
       @Validated(value = User.Default.class) @RequestBody User user,
       BindingResult br) throws GlobalException {
     if (br.hasErrors()) {
-      return new Response("E0001", br.getFieldError().getDefaultMessage());
+      throw  new GlobalException("E0001", br.getFieldError().getDefaultMessage());
     }
     User targetUser = userService.selectByName(user.getUserName());
     //判断用户是否存在
     if (targetUser == null) {
-      return new Response(ExceptionMsg.UserNotExist);
+      throw new GlobalException(ExceptionMsg.UserNotExist);
     } else {
       String Md5Password = MD5Util.stringToMD5(user.getPassword());
       //判断密码是否正确
@@ -74,7 +74,7 @@ public class UserController {
         map.put("userId", userService.selectByName(user.getUserName()).getId());
         return new Response(ExceptionMsg.Success, map);
       } else {
-        return new Response(ExceptionMsg.Error);
+        throw new GlobalException(ExceptionMsg.Error);
       }
     }
   }

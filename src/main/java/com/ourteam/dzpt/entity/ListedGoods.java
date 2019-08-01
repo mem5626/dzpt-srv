@@ -1,5 +1,6 @@
 package com.ourteam.dzpt.entity;
 
+import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -37,7 +38,7 @@ public class ListedGoods {
   private Integer status;
 
 
-  private String createDate;
+  private Date createDate;
   private String billNumber;
 
 
@@ -97,11 +98,11 @@ public class ListedGoods {
     this.supplier = supplier;
   }
 
-  public String getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(String createDate) {
+  public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
 

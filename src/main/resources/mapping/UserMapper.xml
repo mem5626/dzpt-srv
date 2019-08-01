@@ -48,4 +48,7 @@
   <select id="getBanList"
     resultMap="UserInfoMap">select id,userName,phone,email,companyName,address,createDate from user where ifBan = 1</select>
   <update id="banUser" parameterType="User">update user set ifBan=#{ifBan} where id=#{id}</update>
+  <select id="getLastUserId" resultType="integer">
+    select max(id) from user
+  </select>
 </mapper>

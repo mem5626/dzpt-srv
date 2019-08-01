@@ -29,6 +29,9 @@ public class OrderController {
 
   @RequestMapping("/getOrderInfo")
   public Response getOrderInfo(Integer listedGoodsId) throws Exception {
+    if (listedGoodsId == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
     return new Response(ExceptionMsg.Success, orderService.getOrderInfo(listedGoodsId));
   }
 
@@ -51,8 +54,9 @@ public class OrderController {
     }
     if (orderService.affirmOrder(info.get("orderId"), info.get("userId")) == 1) {
       return new Response(ExceptionMsg.Success);
-    } else
+    } else {
       throw new GlobalException(ExceptionMsg.Error);
+    }
   }
 
 }

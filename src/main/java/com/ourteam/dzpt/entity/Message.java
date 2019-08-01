@@ -1,5 +1,6 @@
 package com.ourteam.dzpt.entity;
 
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 public class Message {
@@ -15,7 +16,7 @@ public class Message {
   String title;
   @NotNull(message = "内容不能为空")
   String content;
-  String createDate;
+  Date createDate;
 
   public int getId() {
     return id;
@@ -65,11 +66,11 @@ public class Message {
     this.content = content;
   }
 
-  public String getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(String createDate) {
+  public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
 }

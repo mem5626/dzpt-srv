@@ -1,5 +1,6 @@
 package com.ourteam.dzpt.entity;
 
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 public class TradeBill {
@@ -13,7 +14,7 @@ public class TradeBill {
   @NotNull(message = "对应挂牌不不能为空")
   private Integer listedGoodsId;
   private Integer status;
-  private String createDate;
+  private Date createDate;
 
   public Integer getId() {
     return id;
@@ -55,11 +56,11 @@ public class TradeBill {
     this.status = status;
   }
 
-  public String getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(String createDate) {
+  public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
 }

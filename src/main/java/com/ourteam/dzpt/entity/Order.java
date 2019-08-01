@@ -1,11 +1,13 @@
 package com.ourteam.dzpt.entity;
 
 
+import java.util.Date;
+
 public class Order {
 
   private Integer id;
   private Integer status;
-  private String createDate;
+  private Date createDate;
   private Integer amount;
   private Integer price;
   private String goodsName;
@@ -29,11 +31,11 @@ public class Order {
     this.status = status;
   }
 
-  public String getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(String createDate) {
+  public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
 

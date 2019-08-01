@@ -28,4 +28,17 @@
   <update id="cancelTradeBill" parameterType="integer">
         update tradeBill set status = -1 where id = #{id}
     </update>
+
+  <update id="setTradeBillStatus" parameterType="integer">
+        update tradeBill set status = #{status} where id = #{id}
+    </update>
+
+  <select id="countInNegotiateNum" parameterType="integer" resultType="integer">
+        select count(*) from tradeBill where buyer=#{buyer} and listedGoodsId = #{listedGoodsId}
+        and status = 0
+    </select>
+
+  <select id="getNowStatus" parameterType="integer" resultType="integer">
+        select max(status) from tradeBill where listedGoodsId = #{listedGoodsId}
+    </select>
 </mapper>

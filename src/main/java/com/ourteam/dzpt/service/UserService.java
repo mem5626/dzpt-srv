@@ -1,9 +1,11 @@
 package com.ourteam.dzpt.service;
 
+import com.ourteam.dzpt.entity.Account;
 import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.entity.MyCar;
 import com.ourteam.dzpt.entity.User;
 import com.ourteam.dzpt.exception.GlobalException;
+import com.ourteam.dzpt.mapper.AccountMapper;
 import com.ourteam.dzpt.mapper.MyCarMapper;
 import com.ourteam.dzpt.mapper.UserMapper;
 import com.ourteam.dzpt.util.MD5Util;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -20,6 +23,8 @@ public class UserService {
   private UserMapper userMapper;
   @Autowired
   private MyCarMapper myCarMapper;
+  @Autowired
+  private AccountMapper accountMapper;
 
   public User selectById(int id) {
     return userMapper.selectById(id);
@@ -45,13 +50,22 @@ public class UserService {
     }
   }
 
+  @Transactional
   public int createUser(User user) {
     if (selectByName(user.getUserName()) != null) {
       throw new GlobalException(ExceptionMsg.UserNameOccupied);
     }
     user.setPassword(MD5Util.stringToMD5(user.getPassword()));
     user.setCreateDate(new Date());
-    return userMapper.create(user);
+
+    Account account = new Account();
+    account.setUserId(userMapper.getLastUserId());
+    account.setPayPassword("dzpt");
+    account.setBalance(0);
+    accountMapper.createAccount(account);
+
+    return  userMapper.create(user);
+
   }
 
   public int updatePassword(Map<String, String> info) {

@@ -1,11 +1,13 @@
 package com.ourteam.dzpt.entity;
 
+import java.util.Date;
+
 public class Negotiate {
 
   private Integer id;
   private Integer status;
   private Integer currentPrice;
-  private String createDate;
+  private Date createDate;
   private Integer tradeBillId;
 
   public Integer getId() {
@@ -32,11 +34,11 @@ public class Negotiate {
     this.currentPrice = currentPrice;
   }
 
-  public String getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(String createDate) {
+  public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
 

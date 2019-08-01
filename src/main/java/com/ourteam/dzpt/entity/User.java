@@ -33,7 +33,6 @@ public class User {
   @NotBlank(message = "地址不能不空", groups = {Info.class})
   private String address;
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date createDate;
 
   private int admin = 0;

@@ -1,11 +1,13 @@
 package com.ourteam.dzpt.entity;
 
+import java.util.Date;
+
 public class SystemMsg {
 
   private Integer id;
   private String title;
   private String content;
-  private String createDate;
+  private Date createDate;
 
   public Integer getId() {
     return id;
@@ -31,11 +33,11 @@ public class SystemMsg {
     this.content = content;
   }
 
-  public String getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(String createDate) {
+  public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
 }

@@ -2,6 +2,7 @@ package com.ourteam.dzpt.filter;
 
 import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.entity.Response;
+import com.ourteam.dzpt.util.IpUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.Filter;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 
 @Order(2)
-@WebFilter(urlPatterns = {"/user", "/user/*", "/message/*",
+@WebFilter(urlPatterns = {"/user", "/user/*", "/message/*","/mine/*","/order/*",
     "/hang/changeHangInfo", "/hang/hangNow", "/hang/deleteHangGood", "/hang/getMyHangList"},
     filterName = "loginFilter")
 public class loginFilter implements Filter {
@@ -40,7 +41,7 @@ public class loginFilter implements Filter {
       filterChain.doFilter(servletRequest, servletResponse);
     } else {
       try {
-        System.out.println(session);
+        logger.info("IP:"+IpUtil.getIpAddr(request) + ", URI:" + request.getRequestURI() + ", INFO:" + "未登录");
         returnJson((HttpServletResponse) servletResponse,
             new Response(ExceptionMsg.NotLogin).toString());
       } catch (Exception e) {

@@ -11,6 +11,7 @@ import com.ourteam.dzpt.mapper.MessageMapper;
 import com.ourteam.dzpt.mapper.OrderMapper;
 import com.ourteam.dzpt.mapper.TradeBillMapper;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class OrderService {
     if (listedGoods.getStatus() == 1) {
       throw new GlobalException(ExceptionMsg.OrderExist);
     }
-    String createDate = LocalDateTime.now().toString();
+    Date createDate = new Date();
     TradeBill tradeBill = new TradeBill();
     tradeBill.setBuyer(buyer);
     tradeBill.setSeller(listedGoods.getSupplier());
@@ -47,6 +48,8 @@ public class OrderService {
     order.setGoodsName(listedGoods.getGoodsName());
     order.setPrice(listedGoods.getPrice());
     order.setCreateDate(createDate);
+    order.setDeposit(listedGoods.getPrice()/50);
+    order.setServiceCharge(listedGoods.getPrice()/50);
     order.setStatus(0);
 
     Message message = new Message();

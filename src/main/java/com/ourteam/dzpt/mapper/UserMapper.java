@@ -28,4 +28,6 @@ public interface UserMapper {
   List<Map> getBanList();
 
   int banUser(User user);
+
+  int getLastUserId();
 }
