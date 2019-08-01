@@ -47,7 +47,7 @@ public class PayController {
           bill.setTradeWayName(info.get("tradeWayName"));
         }
         if (info.get("tradeId") != null) {
-          bill.setTradeWayName(info.get("tradeId"));
+          bill.setTradeId(Integer.parseInt(info.get("tradeId")));
         }
         billService.addBill(bill);
         if (!info.get("balance").equals(targetAccount.getBalance())) {

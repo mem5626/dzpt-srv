@@ -16,12 +16,12 @@ import org.slf4j.LoggerFactory;
 public class GlobalExceptionHandler {
   private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-  @ResponseBody
-  @ExceptionHandler(value = Exception.class)
-  public Response errorHandler(HttpServletRequest req,Exception ex) {
-    logger.error("IP:" + IpUtil.getIpAddr(req) + ", URI:"+ req.getRequestURI() + ", ERROR:" + ex);
-    return new Response(ExceptionMsg.Error);
-  }
+//  @ResponseBody
+//  @ExceptionHandler(value = Exception.class)
+//  public Response errorHandler(HttpServletRequest req,Exception ex) {
+//    logger.error("IP:" + IpUtil.getIpAddr(req) + ", URI:"+ req.getRequestURI() + ", ERROR:" + ex);
+//    return new Response(ExceptionMsg.Error);
+//  }
 
   @ResponseBody
   @ExceptionHandler(value = SQLException.class)
