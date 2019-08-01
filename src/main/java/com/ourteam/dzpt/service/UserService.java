@@ -57,14 +57,12 @@ public class UserService {
     }
     user.setPassword(MD5Util.stringToMD5(user.getPassword()));
     user.setCreateDate(new Date());
-
+    userMapper.create(user);
     Account account = new Account();
     account.setUserId(userMapper.getLastUserId());
-    account.setPayPassword("dzpt");
+    account.setPayPassword(MD5Util.stringToMD5("dzpt"));
     account.setBalance(0);
-    accountMapper.createAccount(account);
-
-    return  userMapper.create(user);
+    return  accountMapper.createAccount(account);
 
   }
 

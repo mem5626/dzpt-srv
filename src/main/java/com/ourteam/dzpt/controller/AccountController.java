@@ -48,6 +48,10 @@ public class AccountController {
 
     @RequestMapping(value = "/mine/deleteCard",method = RequestMethod.POST)
         public Response DeleteCard(HttpServletRequest request, @RequestBody Map<String,String> info) throws GlobalException{
+        int id = (int) request.getSession().getAttribute("uid");
+        if (Integer.parseInt(info.get("userId")) != id) {
+            throw new GlobalException(ExceptionMsg.NotAllow);
+        }
         int Id=Integer.parseInt(info.get("id"));
         if((cardService.deleteCard(Id))== 1)
             return new Response(ExceptionMsg.Success);

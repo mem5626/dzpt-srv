@@ -4,6 +4,7 @@ import com.ourteam.dzpt.entity.Account;
 import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.mapper.AccountMapper;
+import com.ourteam.dzpt.util.MD5Util;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,14 @@ public class AccountService {
       }
     }
     Account targetAccount = accountMapper.selectAccountByUid(Integer.parseInt(info.get("userId")));
-    System.out.println("原密码" + targetAccount.getPayPassword());
-    System.out.println("输入密码" + info.get("password"));
-    //未md5
-    if (!info.get("password").equals(targetAccount.getPayPassword())) {
+    System.out.println("当前id" + targetAccount.getUserId());
+    System.out.println("当前原密码" + targetAccount.getPayPassword());
+    System.out.println("输入的原密码" + info.get("password"));
+    System.out.println("设置的新原密码" + info.get("newPassword"));
+    if (!MD5Util.stringToMD5(info.get("password")).equals(targetAccount.getPayPassword())) {
       throw new GlobalException(ExceptionMsg.NotAllow);
-      //未md5
     } else {
-      targetAccount.setPayPassword(info.get("newPassword"));
+      targetAccount.setPayPassword(MD5Util.stringToMD5(info.get("newPassword")));
     }
     return accountMapper.setPassword(targetAccount);
   }

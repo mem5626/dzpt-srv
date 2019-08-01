@@ -7,6 +7,7 @@ import com.ourteam.dzpt.entity.Response;
 import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.service.AccountService;
 import com.ourteam.dzpt.service.BillService;
+import com.ourteam.dzpt.util.MD5Util;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,16 @@ public class PayController {
   public Response pay(HttpServletRequest request, @RequestBody Map<String, String> info)
       throws GlobalException {
     //先验证密码，(判断是否需要银行转账，转账)成功则更新账单，检测用户余额与当前余额是否一致，不一致则更新余额。
-
+    int id = (int) request.getSession().getAttribute("uid");
+    if (Integer.parseInt(info.get("userId")) != id) {
+      throw new GlobalException(ExceptionMsg.NotAllow);
+    }
     Account targetAccount = accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
     if (targetAccount == null) {
       return new Response(ExceptionMsg.UserNotExist);
     } else {
       //判断密码是否正确
-      if (targetAccount.getPayPassword().equals(info.get("payPassword"))) {
+      if (targetAccount.getPayPassword().equals(MD5Util.stringToMD5(info.get("payPassword")))) {
         Bill bill = new Bill();
         bill.setUserId(Integer.parseInt(info.get("userId")));
         bill.setBalance(Integer.parseInt(info.get("balance")));
