@@ -39,7 +39,7 @@ public class AccountService {
     System.out.println("输入的原密码" + info.get("password"));
     System.out.println("设置的新原密码" + info.get("newPassword"));
     if (!MD5Util.stringToMD5(info.get("password")).equals(targetAccount.getPayPassword())) {
-      throw new GlobalException(ExceptionMsg.NotAllow);
+      throw new GlobalException(ExceptionMsg.PasswordError);
     } else {
       targetAccount.setPayPassword(MD5Util.stringToMD5(info.get("newPassword")));
     }

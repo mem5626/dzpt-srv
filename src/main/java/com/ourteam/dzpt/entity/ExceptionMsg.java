@@ -14,7 +14,9 @@ public enum ExceptionMsg {
   AgreementNotSigned("E0009","合同未签名"),
   AgreementHasBeenSigned("E0010","合同已签名"),
   InNegotiate("E0011","议价中"),
-  ListedGoodsNotExist("E0012","挂牌商品不存在");
+  ListedGoodsNotExist("E0012","挂牌商品不存在"),
+  PasswordError("E0013","密码错误");
+
 
   private String code;
   private String msg;

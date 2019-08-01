@@ -60,7 +60,8 @@ public class PayController {
         }
         return new Response(ExceptionMsg.Success);
       } else {
-        return new Response(ExceptionMsg.Error);
+        throw new GlobalException(ExceptionMsg.PasswordError);
+
       }
     }
   }

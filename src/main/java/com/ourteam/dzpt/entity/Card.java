@@ -7,7 +7,7 @@ public class Card {
 
   private int id;
   private int userId;
-  private int cardNumber;
+  private long cardNumber;
   private String bank;
 
   @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -29,11 +29,11 @@ public class Card {
     this.userId = userId;
   }
 
-  public int getCardNumber() {
+  public long getCardNumber() {
     return cardNumber;
   }
 
-  public void setCardNumber(int cardNumber) {
+  public void setCardNumber(long cardNumber) {
     this.cardNumber = cardNumber;
   }
 
