@@ -35,7 +35,6 @@ public class AccountService {
       }
     }
     Account targetAccount = accountMapper.selectAccountByUid(Integer.parseInt(info.get("userId")));
-    System.out.println("当前id" + targetAccount.getUserId());
     System.out.println("当前原密码" + targetAccount.getPayPassword());
     System.out.println("输入的原密码" + info.get("password"));
     System.out.println("设置的新原密码" + info.get("newPassword"));
