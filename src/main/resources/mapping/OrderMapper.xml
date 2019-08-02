@@ -25,7 +25,8 @@
                 user2.userName sellerName,
                 `order`.tradeBillId tradingId,
                 `order`.createDate,
-                 listedGoods.region
+                 listedGoods.region,
+                 listedGoods.image
         from listedGoods,tradeBill,`order`,user user1,user user2
         where listedGoods.id = #{id} and tradeBill.listedGoodsId = #{id}
         and tradeBill.id = `order`.tradeBillId and user1.id = tradeBill.buyer

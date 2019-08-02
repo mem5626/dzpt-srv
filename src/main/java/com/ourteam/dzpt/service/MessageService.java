@@ -13,7 +13,6 @@ import com.ourteam.dzpt.mapper.MessageMapper;
 import com.ourteam.dzpt.mapper.OrderMapper;
 import com.ourteam.dzpt.mapper.TradeBillMapper;
 import com.ourteam.dzpt.mapper.UserMapper;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class MessageService {
 
   @Autowired
@@ -57,7 +57,8 @@ public class MessageService {
     return messageMapper.deleteMessage(messageId);
   }
 
-  public int setReadMessage(Integer messageId){
+  public int setReadMessage(Integer messageId) {
+
     return messageMapper.setReadMessage(messageId);
   }
 
@@ -74,10 +75,10 @@ public class MessageService {
   public int negotiate(Negotiate negotiate, Message message, Integer listGoodsId) {
     Date createDate = new Date();
     message.setCreateDate(createDate);
-    if(tradeBillMapper.getNowStatus(listGoodsId)>0)
-      throw new GlobalException(ExceptionMsg.Error);
-    if(tradeBillMapper.countInNegotiateNum(message.getSender(),listGoodsId)!=0)
-      throw new GlobalException(ExceptionMsg.InNegotiate);
+//    if(tradeBillMapper.getNowStatus(listGoodsId)>0)
+//      throw new GlobalException(ExceptionMsg.Error);
+//    if(tradeBillMapper.countInNegotiateNum(message.getSender(),listGoodsId)!=0)
+//      throw new GlobalException(ExceptionMsg.InNegotiate);
     TradeBill tradeBill = new TradeBill();
     tradeBill.setBuyer(message.getSender());
     tradeBill.setSeller(message.getReceiver());
@@ -117,21 +118,21 @@ public class MessageService {
     order.setDeposit(negotiate.getCurrentPrice() / 50);
     order.setServiceCharge(negotiate.getCurrentPrice() / 50);
 
-    listedGoodsMapper.changeStatus(tradeBill.getListedGoodsId(),1);
+    listedGoodsMapper.changeStatus(tradeBill.getListedGoodsId(), 1);
     tradeBillMapper.setTradeBillStatus(1, tradingId);
     messageMapper.setNegotiateStatus(1, negotiateId);
     return orderMapper.createOrder(order);
   }
 
   @Transactional
-  public int refuseNegotiatedId(Integer tradingId, Integer negotiateId){
+  public int refuseNegotiatedId(Integer tradingId, Integer negotiateId) {
     TradeBill tradeBill = tradeBillMapper.getTradeInfo(tradingId);
     Negotiate negotiate = messageMapper.selectNegotiateById(negotiateId);
     if (negotiate.getStatus() != 0 || tradeBill.getStatus() != 0) {
       throw new GlobalException(ExceptionMsg.NotAllow);
     }
-    tradeBillMapper.setTradeBillStatus(-1,tradingId);
-    return messageMapper.setNegotiateStatus(-1,negotiateId);
+    tradeBillMapper.setTradeBillStatus(-1, tradingId);
+    return messageMapper.setNegotiateStatus(-1, negotiateId);
   }
 
 }

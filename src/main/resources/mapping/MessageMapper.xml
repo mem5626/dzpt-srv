@@ -13,7 +13,7 @@
          update message set isRead = 1 where id = #{id}
     </update>
   <select id="getMessageList" parameterType="integer" resultType="Map">
-        select message.id id, type, title, content, message.createDate, userName senderName from message,user where receiver=#{uid} and sender = user.id;
+        select message.id id, type, title, content, message.createDate, userName senderName, isRead from message,user where receiver=#{uid} and sender = user.id;
     </select>
   <insert id="createSystemMsg" parameterType="SystemMsg">
         insert into systemMsg set title=#{title},content=#{content},createDate=#{createDate}

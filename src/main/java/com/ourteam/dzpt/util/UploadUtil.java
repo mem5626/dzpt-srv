@@ -1,20 +1,28 @@
 package com.ourteam.dzpt.util;
 
+import com.ourteam.dzpt.entity.ExceptionMsg;
+import com.ourteam.dzpt.exception.GlobalException;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-public class uploadUtil {
+@Component
+public class UploadUtil {
 
-  public static String uploadImage(MultipartFile pic, String imageDir)
-      throws IllegalStateException, IOException {
+  @Value("${web.upload-path}")
+  private String uploadFilePath;
+
+  public String uploadImage(MultipartFile pic, String imageDir)
+      throws Exception {
 
     String originalFileName = pic.getOriginalFilename();
     String imageName = UUID.randomUUID().toString() + originalFileName
         .substring(originalFileName.lastIndexOf("."));
 
-    String fileDirPath = "src/main/resources/upload/" + imageDir;
+    String fileDirPath = uploadFilePath + imageDir;
     File fileDir = new File(fileDirPath);
     if (!fileDir.exists()) {
       fileDir.mkdirs();
@@ -26,8 +34,7 @@ public class uploadUtil {
       pic.transferTo(newFile);
       return imageDir + "\\" + imageName;
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new GlobalException(ExceptionMsg.UploadFiled);
     }
-    return null;
   }
 }

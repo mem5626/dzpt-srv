@@ -70,10 +70,16 @@ public class MessageController {
     }
   }
 
-  @RequestMapping(value = "/setReadMessage")
-  public Response setReadMessage(int messageId) throws Exception {
-    if(messageService.setReadMessage(messageId) == 1) return new Response(ExceptionMsg.Success);
-    else throw new GlobalException(ExceptionMsg.Error);
+  @RequestMapping(value = "/setReadMessage", method = RequestMethod.POST)
+  public Response setReadMessage(@RequestBody Map<String, Integer> info) throws Exception {
+    if (info.get("messageId") == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
+    if (messageService.setReadMessage(info.get("messageId")) == 1) {
+      return new Response(ExceptionMsg.Success);
+    } else {
+      throw new GlobalException(ExceptionMsg.Error);
+    }
   }
 
   @RequestMapping("/sendSystemMsg")

@@ -35,6 +35,7 @@ public class ListedGoods {
   private String hangType;
   @NotNull(message = "请选择是否允许撮合交易", groups = ListedGoodsCreate.class)
   private Boolean ismatch;
+  private String image;
   private Integer status;
 
 
@@ -154,4 +155,11 @@ public class ListedGoods {
     this.status = status;
   }
 
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
 }

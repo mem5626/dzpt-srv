@@ -48,10 +48,11 @@
     where id=#{id}
   </update>
 
-  <insert id="hangNow" parameterType="ListedGoods">
+  <insert id="hangNow" parameterType="ListedGoods" useGeneratedKeys="true" keyProperty="id">
         insert into listedGoods set hangtype=#{hangType},goodsName=#{goodsName},
         `type`=#{type},amount=#{amount},unit=#{unit},price=#{price},region=#{region},
-        quality=#{quality},ismatch=#{ismatch},supplier=#{supplier},createDate=#{createDate}
+        quality=#{quality},ismatch=#{ismatch},supplier=#{supplier},createDate=#{createDate},
+        image=#{image}
     </insert>
 
   <delete id="deleteHangGood" parameterType="integer">
