@@ -9,8 +9,7 @@
     </select>
 
   <update id="ifReceive" parameterType="integer">
-        update deliveryBill,tradeBill set deliveryBill.isReceive=1,deliveryBill.status=2,tradeBill.status=4
-         where deliveryBill.id=(select deliveryBill.id from tradeBill,deliveryBill where tradeBill.listedGoodsId=#{listedGoodsId}
+        update deliveryBill set isReceive=1,status=2 where deliveryBill.id=(select deliveryBill.id from tradeBill,deliveryBill where tradeBill.listedGoodsId=#{listedGoodsId}
           and tradeBill.id=deliveryBill.tradeBillId)
     </update>
 

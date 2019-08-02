@@ -25,4 +25,6 @@ public interface TradeBillMapper {
   int countInNegotiateNum(Integer buyer, Integer listedGoodsId);
 
   int getNowStatus(Integer listedGoodsId);
+
+  TradeBill selectTradeByGoodsId(Integer listedGoodsId);
 }

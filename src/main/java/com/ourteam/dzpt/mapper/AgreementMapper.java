@@ -12,6 +12,10 @@ public interface AgreementMapper {
 
   int createAgreement(Agreement agreement);
 
+  int cancelAgreement(Integer id);
+
+  Agreement selectAgreementById(Integer id);
+
   int setBuyerSign(Agreement agreement);
 
   int setSellerSign(Agreement agreement);

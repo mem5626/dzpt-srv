@@ -21,6 +21,10 @@
         select * from analysisCertificate where listedGoodsId=#{listedGoodsId}
     </select>
 
+  <select id="selectAgreementById" resultType="Agreement" parameterType="integer">
+        select * from agreement where id = #{id}
+    </select>
+
   <update id="setBuyerSign" parameterType="com.ourteam.dzpt.entity.Agreement">
         update agreement set status=#{status},buyerSign=#{buyerSign} where tradeBillId=#{tradeBillId}
     </update>

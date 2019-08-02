@@ -25,6 +25,10 @@
         from tradeBill,user user1,user user2 where (buyer=#{uid} or seller=#{uid}) and buyer = user1.id and seller = user2.id
     </select>
 
+  <select id="selectTradeByGoodsId" resultType="TradeBill" parameterType="integer">
+        select * from tradeBill where listedGoodsId = #{listedGoodsId}
+    </select>
+
   <update id="cancelTradeBill" parameterType="integer">
         update tradeBill set status = -1 where id = #{id}
     </update>

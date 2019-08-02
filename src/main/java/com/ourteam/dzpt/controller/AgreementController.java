@@ -5,6 +5,7 @@ import com.ourteam.dzpt.entity.AnalysisCertificate;
 import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.entity.Response;
 import com.ourteam.dzpt.exception.GlobalException;
+import com.ourteam.dzpt.mapper.TradeBillMapper;
 import com.ourteam.dzpt.service.AgreementService;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,18 @@ public class AgreementController {
     }
     return new Response(ExceptionMsg.Success,
         agreementService.getAgreementInfo(tradeBillId));
+  }
+
+  @RequestMapping("/order/cancelAgreement")
+  public Response cancelAgreement(@RequestBody Integer agreementId) throws Exception {
+    if (agreementId == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
+    if (agreementService.cancelAgreement(agreementId) == 1) {
+      return new Response(ExceptionMsg.Success);
+    } else {
+      throw new GlobalException(ExceptionMsg.Error);
+    }
   }
 
   @RequestMapping(value = "/order/getQISInfo", method = RequestMethod.GET)

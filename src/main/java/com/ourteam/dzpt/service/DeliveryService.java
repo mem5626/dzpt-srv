@@ -36,6 +36,7 @@ public class DeliveryService {
   }
 
   public int ifReceive(Integer listedGoodsId) {
+    tradeBillMapper.setTradeBillStatus(4,tradeBillMapper.selectTradeByGoodsId(listedGoodsId).getId());
     return deliveryBillMapper.ifReceive(listedGoodsId);
   }
 

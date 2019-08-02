@@ -37,6 +37,12 @@ public class AgreementService {
     return agreementMapper.getAgreementInfo(tradeBillId);
   }
 
+  @Transactional
+  public int cancelAgreement(Integer id) {
+    tradeBillMapper.cancelTradeBill(agreementMapper.selectAgreementById(id).getTradeBillId());
+    return agreementMapper.cancelAgreement(id);
+  }
+
   public AnalysisCertificate getQISInfo(int listedGoodsId) {
     return agreementMapper.getQISInfo(listedGoodsId);
   }
