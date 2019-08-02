@@ -12,7 +12,7 @@ public interface TradeBillMapper {
 
   TradeBill getTradeInfo(Integer id);
 
-  List<TradeBill> getTradeBill();
+  List<Map> getTradeBill();
 
   List<Map> getMyTrading(Integer uid);
 

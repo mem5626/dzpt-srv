@@ -21,7 +21,7 @@ public class TradeBillService {
     return tradeBillMapper.getTradeInfo(id);
   }
 
-  public List<TradeBill> getTradeBills() {
+  public List<Map> getTradeBills() {
     return tradeBillMapper.getTradeBill();
   }
 

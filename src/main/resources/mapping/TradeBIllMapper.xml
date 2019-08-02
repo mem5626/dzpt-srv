@@ -12,8 +12,12 @@
         select * from tradeBill where id=#{id}
     </select>
 
-  <select id="getTradeBill" resultType="TradeBill">
-        select * from tradeBill where status = 4
+  <select id="getTradeBill" resultType="Map">
+        select tradeBill.createDate ,listedGoodsId, goodsName, user1.userName buyer,
+        user2.userName seller,price,amount
+        from tradeBill,user user1,user user2,`order` where tradeBill.status = 4
+        and user1.id = tradeBill.buyer and user2.id = tradeBill.seller
+        and tradeBill.id = `order`.tradeBillId
     </select>
 
   <select id="getLastId" resultType="integer">
