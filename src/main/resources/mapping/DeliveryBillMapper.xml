@@ -2,17 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.DeliveryBillMapper">
-  <select id="selectDeliveryByTid" parameterType="integer"
-    resultType="com.ourteam.dzpt.entity.DeliveryBill">select * from deliveryBill where tradeBillId=#{tid}</select>
 
-  <update id="ifReceive" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
-        update deliveryBill set isReceive=ture,status=#{status} where id=(select deliveryBill.id from tradeBill,deliveryBill where listedGoodsId=#{listedGoodsId}
-          and tradeBill.id=tradeBillId)
+  <select id="getDeliveryInfo" parameterType="integer"
+    resultType="com.ourteam.dzpt.entity.DeliveryBill">
+    select * from deliveryBill where tradeBillId=#{tradeBillId}
+    </select>
+
+  <update id="ifReceive" parameterType="integer">
+        update deliveryBill,tradeBill set deliveryBill.isReceive=1,deliveryBill.status=2,tradeBill.status=4
+         where deliveryBill.id=(select deliveryBill.id from tradeBill,deliveryBill where tradeBill.listedGoodsId=#{listedGoodsId}
+          and tradeBill.id=deliveryBill.tradeBillId)
     </update>
 
-  <update id="ifDeliver" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
-        update deliveryBill set isDeliver=ture,status=#{status} where id=(select deliveryBill.id from tradeBill,deliveryBill where listedGoodsId=#{listedGoodsId}
-          and tradeBill.id=tradeBillId)
+  <update id="ifDeliver" parameterType="integer">
+        update deliveryBill set isDeliver=1,status=1 where deliveryBill.id=(select deliveryBill.id from tradeBill,deliveryBill where tradeBill.listedGoodsId=#{listedGoodsId}
+          and tradeBill.id=deliveryBill.tradeBillId)
     </update>
 
   <update id="requireReturn" parameterType="com.ourteam.dzpt.entity.DeliveryBill">
@@ -28,7 +32,7 @@
     </update>
 
   <insert id="createDelivery">
-    insert into deliveryBill set goodsName=#{goodsName},deliveryWay=#{deliveryWay},address=#{address},status=#{status},isReceive=#{isReceive},isDeliver=#{isDeliver},
-      tradeBillId=#{tradeBillId},createDate=#{createDate},isReturn=#{isReturn},isAgree=#{isAgree},isConfirm=#{isConfirm}
+    insert into deliveryBill set goodsName=#{goodsName},deliveryWay=#{deliveryWay},address=#{address},status=#{status},
+      tradeBillId=#{tradeBillId},createDate=#{createDate}
   </insert>
 </mapper>

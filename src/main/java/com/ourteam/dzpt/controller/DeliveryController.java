@@ -5,6 +5,7 @@ import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.entity.Response;
 import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.service.DeliveryService;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class DeliveryController {
   private DeliveryService deliveryService;
 
   @RequestMapping(value = "/order/createDelivery", method = RequestMethod.POST)
-  public Response createDelivery(HttpServletRequest request,DeliveryBill deliveryBill) throws GlobalException {
+  public Response createDelivery(HttpServletRequest request,@RequestBody DeliveryBill deliveryBill) throws GlobalException {
     if (deliveryService.createDelivery(deliveryBill) == 1) {
       return new Response(ExceptionMsg.Success);
     } else {
@@ -28,15 +29,19 @@ public class DeliveryController {
   }
 
   @RequestMapping(value = "/order/getDeliveryInfo", method = RequestMethod.GET)
-  public Response selectDeliveryByTid(DeliveryBill deliveryBill) {
+  public Response getDeliveryInfo(Integer tradeBillId) {
+    if (tradeBillId == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
     return new Response(ExceptionMsg.Success,
-        deliveryService.selectDeliveryByTid(deliveryBill.getTradeBillId()));
+        deliveryService.getDeliveryInfo(tradeBillId));
   }
 
   @RequestMapping(value = "/order/deliverGoods", method = RequestMethod.POST)
-  public Response ifDeliver(HttpServletRequest request, @RequestBody DeliveryBill deliveryBill)
+  public Response ifDeliver(HttpServletRequest request,@RequestBody Map<String,Integer> info)
       throws GlobalException {
-    if (deliveryService.ifDeliver(deliveryBill) == 1) {
+    Integer listedGoodsId = info.get("listedGoodsId");
+    if (deliveryService.ifDeliver(listedGoodsId) == 1) {
       return new Response(ExceptionMsg.Success);
     } else {
       return new Response(ExceptionMsg.Error);
@@ -44,9 +49,10 @@ public class DeliveryController {
   }
 
   @RequestMapping(value = "/order/receiveGoods", method = RequestMethod.POST)
-  public Response ifReceive(HttpServletRequest request, @RequestBody DeliveryBill deliveryBill)
+  public Response ifReceive(HttpServletRequest request, @RequestBody Map<String,Integer> info)
       throws GlobalException {
-    if (deliveryService.ifReceive(deliveryBill) == 1) {
+    Integer listedGoodsId = info.get("listedGoodsId");
+    if (deliveryService.ifReceive(listedGoodsId) == 1) {
       return new Response(ExceptionMsg.Success);
     } else {
       return new Response(ExceptionMsg.Error);

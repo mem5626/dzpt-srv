@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AgreementMapper {
 
-  Agreement getAgreementInfo(int tradeId);
+  Map getAgreementInfo(int tradeBillId);
 
   int createAgreement(Agreement agreement);
 

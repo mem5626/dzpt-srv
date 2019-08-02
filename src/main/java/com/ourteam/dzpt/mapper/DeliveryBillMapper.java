@@ -1,19 +1,18 @@
 package com.ourteam.dzpt.mapper;
 
 import com.ourteam.dzpt.entity.DeliveryBill;
-import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface DeliveryBillMapper {
 
-  Map selectDeliveryByTid(int tid);
+  DeliveryBill getDeliveryInfo(int tradeBillId);
 
   int createDelivery(DeliveryBill deliveryBill);
 
-  int ifReceive(DeliveryBill deliveryBill);
+  int ifReceive(Integer listedGoodsId);
 
-  int ifDeliver(DeliveryBill deliveryBill);
+  int ifDeliver(Integer listedGoodsId);
 
   int requireReturn(DeliveryBill deliveryBill);
 

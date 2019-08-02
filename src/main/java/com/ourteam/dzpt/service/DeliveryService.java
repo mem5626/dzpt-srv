@@ -1,9 +1,11 @@
 package com.ourteam.dzpt.service;
 
 import com.ourteam.dzpt.entity.DeliveryBill;
+import com.ourteam.dzpt.entity.ExceptionMsg;
+import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.mapper.DeliveryBillMapper;
+import com.ourteam.dzpt.mapper.TradeBillMapper;
 import java.time.LocalDateTime;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,25 +14,29 @@ public class DeliveryService {
 
   @Autowired
   private DeliveryBillMapper deliveryBillMapper;
+  @Autowired
+  private TradeBillMapper tradeBillMapper;
 
   public int createDelivery(DeliveryBill deliveryBill) {
+    if (getDeliveryInfo(deliveryBill.getTradeBillId()) != null) {
+      throw new GlobalException(ExceptionMsg.DeliveryExit);
+    }
+    tradeBillMapper.setTradeBillStatus(3,deliveryBill.getTradeBillId());
     deliveryBill.setStatus(0);
     deliveryBill.setCreateDate(LocalDateTime.now().toString());
     return deliveryBillMapper.createDelivery(deliveryBill);
   }
 
-  public Map selectDeliveryByTid(int tid) {
-    return deliveryBillMapper.selectDeliveryByTid(tid);
+  public DeliveryBill getDeliveryInfo(int tradeBillId) {
+    return deliveryBillMapper.getDeliveryInfo(tradeBillId);
   }
 
-  public int ifDeliver(DeliveryBill deliveryBill) {
-    deliveryBill.setStatus(1);
-    return deliveryBillMapper.ifDeliver(deliveryBill);
+  public int ifDeliver(Integer listedGoodsId) {
+    return deliveryBillMapper.ifDeliver(listedGoodsId);
   }
 
-  public int ifReceive(DeliveryBill deliveryBill) {
-    deliveryBill.setStatus(2);
-    return deliveryBillMapper.ifReceive(deliveryBill);
+  public int ifReceive(Integer listedGoodsId) {
+    return deliveryBillMapper.ifReceive(listedGoodsId);
   }
 
   public int requireReturn(DeliveryBill deliveryBill) {

@@ -2,8 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.AgreementMapper">
-  <select id="getAgreementInfo" parameterType="integer"
-    resultType="com.ourteam.dzpt.entity.Agreement">select * from agreement where tradeBillId=#{tradeId}</select>
+  <select id="getAgreementInfo" parameterType="integer" resultType="Map">
+        select `agreement`.id agreementId,
+               `agreement`.status,
+               `agreement`.buyerSign,
+               `agreement`.sellerSign,
+               user1.id buyerId,
+               user2.id sellerId,
+               user1.userName buyer,
+               user2.userName seller,
+               `agreement`.createDate createDate
+        from tradeBill,`agreement`,user user1,user user2
+        where `agreement`.tradeBillId = #{tradeBillId} and tradeBill.id = #{tradeBillId}
+        and user1.id = tradeBill.buyer and user2.id = tradeBill.seller
+    </select>
 
   <select id="getQISInfo" parameterType="integer" resultType="com.ourteam.dzpt.entity.Agreement">
         select * from analysisCertificate where listedGoodsId=#{listedGoodsId}
@@ -21,3 +33,4 @@
         insert into agreement set buyerSign=#{buyerSign},sellerSign=#{sellerSign},createDate=#{createDate},status=#{status},tradeBillId=#{tradeBillId}
     </insert>
 </mapper>
+

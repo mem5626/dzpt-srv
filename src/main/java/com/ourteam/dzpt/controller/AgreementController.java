@@ -21,7 +21,7 @@ public class AgreementController {
   private AgreementService agreementService;
 
   @RequestMapping(value = "/order/createAgreement", method = RequestMethod.POST)
-  public Response createAgreement(HttpServletRequest request,@RequestBody Agreement agreement) {
+  public Response createAgreement(HttpServletRequest request, @RequestBody Agreement agreement) {
     if (agreementService.createAgreement(agreement) == 1) {
       return new Response(ExceptionMsg.Success);
     } else {
@@ -30,9 +30,12 @@ public class AgreementController {
   }
 
   @RequestMapping(value = "/order/getAgreementInfo", method = RequestMethod.GET)
-  public Response selectAgreementByTid(Agreement agreement) {
+  public Response getAgreementInfo(Integer tradeBillId) {
+    if (tradeBillId == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
     return new Response(ExceptionMsg.Success,
-        agreementService.getAgreementInfo(agreement.getTradeBillId()));
+        agreementService.getAgreementInfo(tradeBillId));
   }
 
   @RequestMapping(value = "/order/getQISInfo", method = RequestMethod.GET)
@@ -41,8 +44,11 @@ public class AgreementController {
   }
 
   @RequestMapping(value = "/order/buyerSign", method = RequestMethod.POST)
-  public Response setBuyerSign(HttpServletRequest request,@RequestBody Agreement agreement)
+  public Response setBuyerSign(HttpServletRequest request, @RequestBody Agreement agreement)
       throws GlobalException {
+    if (agreement.getBuyerSign() == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
     if (agreementService.setBuyerSign(agreement) == 1) {
       return new Response(ExceptionMsg.Success);
     } else {
@@ -51,8 +57,11 @@ public class AgreementController {
   }
 
   @RequestMapping(value = "/order/sellerSign", method = RequestMethod.POST)
-  public Response setSellerSign(HttpServletRequest request,@RequestBody Agreement agreement)
+  public Response setSellerSign(HttpServletRequest request, @RequestBody Agreement agreement)
       throws GlobalException {
+    if (agreement.getSellerSign() == null) {
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
     if (agreementService.setSellerSign(agreement) == 1) {
       return new Response(ExceptionMsg.Success);
     } else {
