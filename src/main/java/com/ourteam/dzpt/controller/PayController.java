@@ -34,35 +34,64 @@ public class PayController {
       throw new GlobalException(ExceptionMsg.NotAllow);
     }
     Account targetAccount = accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
-    if (targetAccount == null) {
-      return new Response(ExceptionMsg.UserNotExist);
-    } else {
-      //判断密码是否正确
-      if (targetAccount.getPayPassword().equals(MD5Util.stringToMD5(info.get("payPassword")))) {
-        Bill bill = new Bill();
-        bill.setUserId(Integer.parseInt(info.get("userId")));
-        bill.setBalance(Integer.parseInt(info.get("balance")));
-        bill.setMoney(Integer.parseInt(info.get("money")));
-        bill.setDrcrflg(Integer.parseInt(info.get("drcrflg")));
-        bill.setTradeType(Integer.parseInt(info.get("tradeType")));
-        bill.setTradeWay(Integer.parseInt(info.get("tradeWay")));
-        //后台需要处理少传属性的情况
-        if (info.get("tradeWayName") != null) {
-          bill.setTradeWayName(info.get("tradeWayName"));
-        }
-        if (info.get("tradeId") != null) {
-          bill.setTradeId(Integer.parseInt(info.get("tradeId")));
-        }
-        billService.addBill(bill);
-        if (!info.get("balance").equals(targetAccount.getBalance())) {
-          targetAccount.setBalance(bill.getBalance());
-          accountService.updateBalance(targetAccount);
-        }
-        return new Response(ExceptionMsg.Success);
-      } else {
-        throw new GlobalException(ExceptionMsg.PasswordError);
 
+    //判断密码是否正确
+    if (targetAccount.getPayPassword().equals(MD5Util.stringToMD5(info.get("payPassword")))) {
+      Bill bill = new Bill();
+      bill.setUserId(Integer.parseInt(info.get("userId")));
+      bill.setBalance(Integer.parseInt(info.get("balance")));
+      bill.setMoney(Integer.parseInt(info.get("money")));
+      bill.setDrcrflg(Integer.parseInt(info.get("drcrflg")));
+      bill.setTradeType(Integer.parseInt(info.get("tradeType")));
+      bill.setTradeWay(Integer.parseInt(info.get("tradeWay")));
+      //后台需要处理少传属性的情况
+      if (info.get("tradeWayName") != null) {
+        bill.setTradeWayName(info.get("tradeWayName"));
       }
+      if (info.get("tradeId") != null) {
+        bill.setTradeId(Integer.parseInt(info.get("tradeId")));
+      }
+      billService.addBill(bill);
+      if (!info.get("balance").equals(targetAccount.getBalance())) {
+        targetAccount.setBalance(bill.getBalance());
+        accountService.updateBalance(targetAccount);
+      }
+      return new Response(ExceptionMsg.Success);
+    } else {
+      throw new GlobalException(ExceptionMsg.PasswordError);
+
     }
+
+  }
+
+  @RequestMapping(value = "/pay/refund", method = RequestMethod.POST)
+  public Response refund(HttpServletRequest request, @RequestBody Map<String, String> info) {
+    Bill bill = new Bill();
+    Account targetAccount=accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
+    long beforeBalance=targetAccount.getBalance();
+    long afterBalance=beforeBalance+Integer.parseInt(info.get("money"));
+    bill.setUserId(Integer.parseInt(info.get("userId")));
+    bill.setBalance(afterBalance);
+    bill.setMoney(Integer.parseInt(info.get("money")));
+    bill.setDrcrflg(Integer.parseInt(info.get("drcrflg")));
+    bill.setTradeType(Integer.parseInt(info.get("tradeType")));
+    //后台需要处理少传属性的情况
+    if (info.get("tradeWay") != null) {
+      bill.setTradeWay(Integer.parseInt(info.get("tradeWay")));
+    }
+    if (info.get("tradeWayName") != null) {
+      bill.setTradeWayName(info.get("tradeWayName"));
+    }
+    if (info.get("tradeId") != null) {
+      bill.setTradeId(Integer.parseInt(info.get("tradeId")));
+    }
+    if(billService.addBill(bill)==1&&accountService.updateBalance(targetAccount)==1){
+      return new Response(ExceptionMsg.Success);
+    }else{
+      throw new GlobalException(ExceptionMsg.Error);
+    }
+
+
+
   }
 }

@@ -7,8 +7,8 @@ import java.util.Date;
 public class Bill {
     private Integer id;
     private Integer userId;
-    private Integer money;
-    private Integer balance;
+    private long money;
+    private long balance;
     private Integer drcrflg;
     private Integer tradeWay;
     private String tradeWayName;
@@ -43,19 +43,19 @@ public class Bill {
         this.userId = userId;
     }
 
-    public Integer getMoney() {
+    public long getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(long money) {
         this.money = money;
     }
 
-    public Integer getBalance() {
+    public long getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 

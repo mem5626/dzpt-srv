@@ -10,6 +10,8 @@ import com.ourteam.dzpt.service.AccountService;
 import com.ourteam.dzpt.service.BillService;
 import com.ourteam.dzpt.service.CardService;
 import com.ourteam.dzpt.util.MD5Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +23,8 @@ import java.util.Map;
 
 @RestController
 public class AccountController {
+    private static Logger logger = LoggerFactory.getLogger(AccountController.class);
+
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -42,16 +46,13 @@ public class AccountController {
     @RequestMapping(value = "/mine/addCard", method = RequestMethod.POST)
     public Response AddCard(HttpServletRequest request, @RequestBody Card card) throws GlobalException{
         if ((cardService.addCard(card))== 1)
-            return new Response(ExceptionMsg.Success);
+        {   logger.info("获取了",accountService.getBillByUserId("1"));;
+            return new Response(ExceptionMsg.Success);}
         else return new Response(ExceptionMsg.Error);
     }
 
     @RequestMapping(value = "/mine/deleteCard",method = RequestMethod.POST)
         public Response DeleteCard(HttpServletRequest request, @RequestBody Map<String,String> info) throws GlobalException{
-        int id = (int) request.getSession().getAttribute("uid");
-        if (Integer.parseInt(info.get("userId")) != id) {
-            throw new GlobalException(ExceptionMsg.NotAllow);
-        }
         int Id=Integer.parseInt(info.get("id"));
         if((cardService.deleteCard(Id))== 1)
             return new Response(ExceptionMsg.Success);
@@ -67,20 +68,9 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/verify", method = RequestMethod.POST)
-    public Response verifyPassword(HttpServletRequest request, @Validated(value = Account.Default.class) @RequestBody Account account,
-                                   BindingResult br) throws GlobalException{
-        if (br.hasErrors()) return new Response("E0001", br.getFieldError().getDefaultMessage());
-        Account targetAccount= accountService.getAccountByUid(account.getUserId());
-        if (targetAccount == null) return new Response(ExceptionMsg.UserNotExist);
-        else {
-            String Md5Password = MD5Util.stringToMD5(account.getPayPassword());
-            //判断密码是否正确
-            if (targetAccount.getPayPassword().equals(Md5Password)) {
-                return new Response(ExceptionMsg.Success);
-            } else {
-                return new Response(ExceptionMsg.Error);
-            }
-        }
+    public Response verifyPassword(HttpServletRequest request,@RequestBody Map<String,String> info ) throws GlobalException{
+        if(accountService.verifyPayPassword(info))return new Response(ExceptionMsg.Success);
+        else throw new GlobalException(ExceptionMsg.PasswordError);
     }
 
     @RequestMapping(value = "/account/updatePassword", method = RequestMethod.POST)
