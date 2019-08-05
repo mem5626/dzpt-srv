@@ -18,10 +18,10 @@
   <select id="selectById" resultType="com.ourteam.dzpt.entity.User"
     parameterType="integer">select * from user where id = #{id}</select>
   <select id="getUserInfo" resultMap="UserInfoMap"
-    parameterType="STRING">select id,userName,phone,email,companyName,address,createDate from user where userName=#{userName}</select>
+    parameterType="integer">select id,userName,phone,email,companyName,address,createDate from user where id=#{id}</select>
   <select id="selectByName" resultType="com.ourteam.dzpt.entity.User"
-    parameterType="STRING">select * from user where userName = #{userName}</select>
-
+    parameterType="STRING">select * from user where userName = #{userName}
+  </select>
   <delete id="delete" parameterType="integer">delete from user where id=#{id}</delete>
   <update id="updateInfo" parameterType="com.ourteam.dzpt.entity.User">
     UPDATE user SET

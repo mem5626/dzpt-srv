@@ -6,6 +6,7 @@ import com.ourteam.dzpt.entity.MyCar;
 import com.ourteam.dzpt.entity.User;
 import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.mapper.AccountMapper;
+import com.ourteam.dzpt.mapper.ListedGoodsMapper;
 import com.ourteam.dzpt.mapper.MyCarMapper;
 import com.ourteam.dzpt.mapper.UserMapper;
 import com.ourteam.dzpt.util.MD5Util;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class UserService {
 
   @Autowired
@@ -25,16 +27,15 @@ public class UserService {
   private MyCarMapper myCarMapper;
   @Autowired
   private AccountMapper accountMapper;
+  @Autowired
+  private ListedGoodsMapper listedGoodsMapper;
 
   public User selectById(int id) {
     return userMapper.selectById(id);
   }
 
-  public Map getUserInfo(String name) {
-    if (name == null || name.equals("")) {
-      throw new GlobalException(ExceptionMsg.ParameterError);
-    }
-    return userMapper.getUserInfo(name);
+  public Map getUserInfo(int id) {
+    return userMapper.getUserInfo(id);
   }
 
   public User selectByName(String userName) {
@@ -50,8 +51,7 @@ public class UserService {
     }
   }
 
-  @Transactional
-  public int createUser(User user) {
+  public void createUser(User user) {
     if (selectByName(user.getUserName()) != null) {
       throw new GlobalException(ExceptionMsg.UserNameOccupied);
     }
@@ -62,11 +62,28 @@ public class UserService {
     account.setUserId(userMapper.getLastUserId());
     account.setPayPassword(MD5Util.stringToMD5("dzpt"));
     account.setBalance(0);
-    return  accountMapper.createAccount(account);
-
+    int result = accountMapper.createAccount(account);
+    if (result != 1) {
+      throw new GlobalException(ExceptionMsg.Error, "注册影响用户数异常，为" + result);
+    }
   }
 
-  public int updatePassword(Map<String, String> info) {
+  public int login(User user) {
+    User targetUser = userMapper.selectByName(user.getUserName());
+    if (targetUser == null) {
+      throw new GlobalException(ExceptionMsg.UserNotExist);
+    }
+    if (!targetUser.getPassword().equals(MD5Util.stringToMD5(user.getPassword()))) {
+      throw new GlobalException(ExceptionMsg.PasswordError);
+    }
+    if (targetUser.getIfBan() != 0){
+      throw new GlobalException(ExceptionMsg.HasBeenBan);
+    }
+    return targetUser.getId();
+  }
+
+
+  public void updatePassword(Map<String, String> info) {
     String[] parameters = {info.get("userName"), info.get("password"), info.get("newPassword")};
     for (String parameter : parameters) {
       if (parameter == null || parameter.equals("")) {
@@ -80,43 +97,52 @@ public class UserService {
     } else {
       targetUser.setPassword(MD5Util.stringToMD5(info.get("newPassword")));
     }
-    return userMapper.updatePassword(targetUser);
+    int result = userMapper.updatePassword(targetUser);
+    if (result != 1) {
+      throw new GlobalException(ExceptionMsg.Error, "修改用户密码返回参数错误，为" + result);
+    }
   }
 
-  public int deleteUser(Integer id) {
-    return userMapper.delete(id);
-  }
-
-  public int updateInfo(User user) {
-    return userMapper.updateInfo(user);
+  public void updateInfo(User user) {
+    int result = userMapper.updateInfo(user);
+    if (result != 1) {
+      throw new GlobalException(ExceptionMsg.Error, "更新用户返回值异常，为" + result);
+    }
   }
 
   public List<Map> getBanList() {
     return userMapper.getBanList();
   }
 
-  public int banUser(User user) {
-    System.out.println(user.getId());
-    System.out.println(user.getIfBan());
-    if (user.getId() <= 0 || user.getIfBan() < 0 || user.getIfBan() > 1) {
-      throw new GlobalException(ExceptionMsg.ParameterError);
+  public void banUser(User user) {
+    int result = userMapper.banUser(user);
+    if (result != 1) {
+      throw new GlobalException(ExceptionMsg.Error, "封禁用户返回参数异常，为" + result);
     }
-    return userMapper.banUser(user);
   }
 
-  public int deleteByGoodsId(MyCar myCar, Integer uid) {
+  public void deleteByGoodsId(MyCar myCar, Integer uid) {
     if (!myCar.getUserId().equals(uid)) {
       throw new GlobalException(ExceptionMsg.NotAllow);
     }
-    return myCarMapper.deleteByGoodsId(myCar);
+    int result = myCarMapper.deleteByGoodsId(myCar);
+    if (result != 1) {
+      throw new GlobalException(ExceptionMsg.Error, "删除购物车商品返回参数异常，为" + result);
+    }
   }
 
-  public int insertIntoMyCar(MyCar myCar, Integer uid) {
+  public void insertIntoMyCar(MyCar myCar, Integer uid) {
     if (!myCar.getUserId().equals(uid)) {
       throw new GlobalException(ExceptionMsg.NotAllow);
+    }
+    if (listedGoodsMapper.getListedGoodsInfo(myCar.getListedGoodsId()).getStatus() != 0) {
+      throw new GlobalException(ExceptionMsg.AddMyCarError);
     }
     myCar.setCreateDate(new Date());
-    return myCarMapper.insert(myCar);
+    int result = myCarMapper.insert(myCar);
+    if (result != 1) {
+      throw new GlobalException(ExceptionMsg.Error, "加入购物车返回参数异常，为" + result);
+    }
   }
 
   public List<Map> getMyCar(Integer userId) {

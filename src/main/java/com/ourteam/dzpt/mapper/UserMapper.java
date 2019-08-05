@@ -13,7 +13,7 @@ public interface UserMapper {
 
   User selectByName(String name);
 
-  Map getUserInfo(String name);
+  Map getUserInfo(int id);
 
   List<Map> selectAll();
 

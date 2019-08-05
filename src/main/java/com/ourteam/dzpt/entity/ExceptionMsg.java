@@ -18,7 +18,9 @@ public enum ExceptionMsg {
   PasswordError("E0013", "密码错误"),
   DeliveryNotExit("E0014", "交收信息不存在"),
   DeliveryExit("E0015", "交收单已存在"),
-  UploadFiled("E0016", "上传图片失败");
+  UploadFiled("E0016", "上传图片失败"),
+  AddMyCarError("E0017","商品已售出"),
+  HasBeenBan("E0018","用户已被封禁");
 
 
   private String code;
