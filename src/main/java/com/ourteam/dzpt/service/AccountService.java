@@ -10,6 +10,7 @@ import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.exception.GlobalExceptionHandler;
 import com.ourteam.dzpt.mapper.AccountMapper;
 import com.ourteam.dzpt.util.MD5Util;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public class AccountService {
     return accountMapper.setPassword(targetAccount);
   }
 
-  public Object getBillByUserId(String userId) {
+  public String getBillByUserId(String userId) {
     RestTemplate restTemplate=new RestTemplate();
     String uri="http://10.2.2.50:8080/mine/getBill?userId="+userId;
     HttpHeaders headers = new HttpHeaders();
@@ -67,7 +68,8 @@ public class AccountService {
     HttpEntity<String> entity = new HttpEntity<String>(headers);
     String strbody=restTemplate.exchange(uri, HttpMethod.GET, entity,String.class).getBody();
     Response res = JSONArray.parseObject(strbody, Response.class);
-    return res;
+    String strbody1=restTemplate.getBody();
+    return res.getCode();
   }
 
   public Boolean verifyPayPassword(Map<String, String> info){

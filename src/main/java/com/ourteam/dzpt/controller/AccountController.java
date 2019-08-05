@@ -10,6 +10,7 @@ import com.ourteam.dzpt.service.AccountService;
 import com.ourteam.dzpt.service.BillService;
 import com.ourteam.dzpt.service.CardService;
 import com.ourteam.dzpt.util.MD5Util;
+import java.lang.reflect.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class AccountController {
     @RequestMapping(value = "/mine/addCard", method = RequestMethod.POST)
     public Response AddCard(HttpServletRequest request, @RequestBody Card card) throws GlobalException{
         if ((cardService.addCard(card))== 1)
-        {   logger.info("获取了",accountService.getBillByUserId("1"));;
+        {   logger.info(accountService.getBillByUserId("1"));
             return new Response(ExceptionMsg.Success);}
         else return new Response(ExceptionMsg.Error);
     }
