@@ -18,6 +18,7 @@ public class CardService {
   }
 
   public int addCard(Card card) {
+
     card.setBindTime(new Date());
     return cardMapper.addCard(card);
   }

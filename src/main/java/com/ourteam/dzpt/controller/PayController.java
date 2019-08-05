@@ -8,8 +8,11 @@ import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.service.AccountService;
 import com.ourteam.dzpt.service.BillService;
 import com.ourteam.dzpt.util.MD5Util;
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +27,10 @@ public class PayController {
   @Autowired
   private BillService billService;
 
+  private static Logger logger = LoggerFactory.getLogger(PayController.class);
 
   @RequestMapping(value = "/pay/commit", method = RequestMethod.POST)
-  public Response pay(HttpServletRequest request, @RequestBody Map<String, String> info)
+  public Response pay(HttpServletRequest request, @RequestBody HashMap<String, String> info)
       throws GlobalException {
     //先验证密码，(判断是否需要银行转账，转账)成功则更新账单，检测用户余额与当前余额是否一致，不一致则更新余额。
     int id = (int) request.getSession().getAttribute("uid");
@@ -65,11 +69,11 @@ public class PayController {
   }
 
   @RequestMapping(value = "/pay/refund", method = RequestMethod.POST)
-  public Response refund(HttpServletRequest request, @RequestBody Map<String, String> info) {
+  public Response refund(HttpServletRequest request, @RequestBody HashMap<String, String> info) {
     Bill bill = new Bill();
-    Account targetAccount=accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
-    long beforeBalance=targetAccount.getBalance();
-    long afterBalance=beforeBalance+Integer.parseInt(info.get("money"));
+    Account targetAccount = accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
+    long beforeBalance = targetAccount.getBalance();
+    long afterBalance = beforeBalance + Integer.parseInt(info.get("money"));
     bill.setUserId(Integer.parseInt(info.get("userId")));
     bill.setBalance(afterBalance);
     bill.setMoney(Integer.parseInt(info.get("money")));
@@ -85,13 +89,17 @@ public class PayController {
     if (info.get("tradeId") != null) {
       bill.setTradeId(Integer.parseInt(info.get("tradeId")));
     }
-    if(billService.addBill(bill)==1&&accountService.updateBalance(targetAccount)==1){
+    if (billService.addBill(bill) == 1 && accountService.updateBalance(targetAccount) == 1) {
       return new Response(ExceptionMsg.Success);
-    }else{
+    } else {
       throw new GlobalException(ExceptionMsg.Error);
     }
+  }
 
-
-
+  @RequestMapping(value = "/pay/test", method = RequestMethod.GET)
+  public Response test(HttpServletRequest request) {
+    logger.info(accountService.getBillByUserId("1"));
+    logger.info(accountService.testPostAddCard("1"));
+    return new Response(ExceptionMsg.Success);
   }
 }

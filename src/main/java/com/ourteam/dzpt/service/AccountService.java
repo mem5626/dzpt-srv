@@ -10,7 +10,9 @@ import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.exception.GlobalExceptionHandler;
 import com.ourteam.dzpt.mapper.AccountMapper;
 import com.ourteam.dzpt.util.MD5Util;
+import com.ourteam.dzpt.util.NetUtil;
 import java.lang.reflect.Array;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -21,6 +23,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -61,18 +65,23 @@ public class AccountService {
   }
 
   public String getBillByUserId(String userId) {
-    RestTemplate restTemplate=new RestTemplate();
-    String uri="http://10.2.2.50:8080/mine/getBill?userId="+userId;
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-    HttpEntity<String> entity = new HttpEntity<String>(headers);
-    String strbody=restTemplate.exchange(uri, HttpMethod.GET, entity,String.class).getBody();
-    Response res = JSONArray.parseObject(strbody, Response.class);
-    String strbody1=restTemplate.getBody();
-    return res.getCode();
+    HashMap<String,String> map=new HashMap<>();
+    map.put("userId","1");
+    Response response= NetUtil.getRequest("/mine/getBill",map);
+    return response.getCode();
   }
 
-  public Boolean verifyPayPassword(Map<String, String> info){
+
+  public String testPostAddCard(String userId) {
+    HashMap<String,String> map=new HashMap<>();
+    map.put("userId","1");
+    map.put("cardNumber","7777777");
+    map.put("bank","bankbankbank");
+    Response response=NetUtil.postRequest("/mine/addCard",map);
+    return response.getCode();
+  }
+
+  public Boolean verifyPayPassword(HashMap<String, String> info){
     Account targetAccount = accountMapper.selectAccountByUid(Integer.parseInt(info.get("userId")));
     return MD5Util.stringToMD5(info.get("password")).equals(targetAccount.getPayPassword());
   }
