@@ -18,9 +18,15 @@ public interface MessageMapper {
 
     int setReadMessage(Integer id);
 
+    Message getMessageInfo(Integer id);
+
     int createSystemMsg(SystemMsg systemMsg);
 
     List<SystemMsg> getSystemMsgList();
+
+    int updateSystemMsg(SystemMsg systemMsg);
+
+    int deleteSystemMsg(Integer systemMsgId);
 
     int createNegotiate(Negotiate negotiate);
 
