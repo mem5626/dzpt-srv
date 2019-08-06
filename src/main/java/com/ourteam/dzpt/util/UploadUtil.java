@@ -4,6 +4,8 @@ import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.exception.GlobalException;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,8 +23,8 @@ public class UploadUtil {
     String originalFileName = pic.getOriginalFilename();
     String imageName = UUID.randomUUID().toString() + originalFileName
         .substring(originalFileName.lastIndexOf("."));
-
-    String fileDirPath = uploadFilePath + imageDir;
+    String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+    String fileDirPath = uploadFilePath + datePath + "\\" + imageDir;
     File fileDir = new File(fileDirPath);
     if (!fileDir.exists()) {
       fileDir.mkdirs();
