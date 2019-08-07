@@ -24,7 +24,7 @@ import org.springframework.core.annotation.Order;
 
 @Order(2)
 @WebFilter(value = "/*")
-public class loginFilter implements Filter {
+public class LoginFilter implements Filter {
 
   private Logger logger = LoggerFactory.getLogger(this.getClass());
 

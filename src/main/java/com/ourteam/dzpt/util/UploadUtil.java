@@ -34,7 +34,7 @@ public class UploadUtil {
     try {
       File newFile = new File(filePath);
       pic.transferTo(newFile);
-      return imageDir + "\\" + imageName;
+      return datePath + "\\" + imageDir + "\\" + imageName;
     } catch (IOException e) {
       throw new GlobalException(ExceptionMsg.UploadFiled);
     }
