@@ -1,5 +1,7 @@
 package com.ourteam.dzpt.controller;
 
+import com.icbc.api.IcbcApiException;
+import com.icbc.api.response.MybankPayCpayCppayapplyResponseV1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -38,5 +40,36 @@ MybankPayCpayCppayapplyRequestV1.MybankPayCpayCppayapplyRequestV1Biz bizContent=
       beanGoodsInfo.setGoodsSubId("1");
       beanGoodsInfo.setGoodsName("1");
       beanGoodsInfo.setPayeeCompanyName("");
+
+      bizContent.setSumPayamt("3332");
+      bizContent.setOrderRemark("订单备注");
+      bizContent.setRceiptRemark("回单补充信息备注");
+      bizContent.setSubmitTime("20240101220000");
+      bizContent.setReturnUrl("");
+      bizContent.setCallbackUrl("");
+      bizContent.setSubmitTime("");
+
+      bizContent.setPayeeList(beanRecvMallInfoList);
+      bizContent.setGoodsList(beanGoodsInfoList);
+
+      request.setBizContent(bizContent);
+
+      Random rand = new Random();
+      String msgId = rand.nextInt(99999)+"msg";
+      System.out.println(msgId);
+
+      MybankPayCpayCppayapplyResponseV1 response;
+      try {
+          response = client.execute(request,msgId);
+          System.out.println(JSONObject.toJSONString(response));
+          if (response.isSuccess()){
+              System.out.println(response.getReturnCode());
+          }else{
+              System.out.println(response.getReturnCode());
+              System.out.println(response.getReturnMsg());
+          }
+      }catch (IcbcApiException e){
+          e.printStackTrace();
+      }
     }
 }
