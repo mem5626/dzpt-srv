@@ -1,6 +1,9 @@
 package com.ourteam.dzpt.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
+import com.ourteam.dzpt.entity.Bill;
 import com.ourteam.dzpt.entity.Card;
 import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.entity.Response;
@@ -17,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -91,5 +96,15 @@ public class AccountController {
     }
   }
 
+//  @ResponseBody
+//  @RequestMapping("/page")
+//  public PageInfo<Bill> findWithBLOBsByPage(@RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
+//      @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize){
+//
+//    Page<Bill> billList = billService.findWithBLOBsByPage(pageNum, pageSize);
+//    // 需要把Page包装成PageInfo对象才能序列化。该插件也默认实现了一个PageInfo
+//    PageInfo<Bill> pageInfo = new PageInfo<>(billList);
+//    return pageInfo;
+//  }
 
 }

@@ -26,10 +26,6 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @Autowired
-  RedisTemplate redisTemplate;
-
-  @Autowired
 
   @RequestMapping(value = "/user/getUserList", method = RequestMethod.GET)
   public Response selectUsers() throws Exception {
