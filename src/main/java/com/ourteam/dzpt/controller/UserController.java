@@ -25,7 +25,6 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @Autowired
 
   @RequestMapping(value = "/user/getUserList", method = RequestMethod.GET)
   public Response selectUsers() throws Exception {

@@ -74,6 +74,7 @@ public class PayController {
     Account targetAccount = accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
     long beforeBalance = targetAccount.getBalance();
     long afterBalance = beforeBalance + Integer.parseInt(info.get("money"));
+    targetAccount.setBalance(afterBalance);
     bill.setUserId(Integer.parseInt(info.get("userId")));
     bill.setBalance(afterBalance);
     bill.setMoney(Integer.parseInt(info.get("money")));
