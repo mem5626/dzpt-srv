@@ -82,7 +82,7 @@ public class MessageController {
     }
   }
 
-  @RequestMapping("/sendSystemMsg")
+  @RequestMapping(value = "/sendSystemMsg",method = RequestMethod.POST)
   public Response sendSystemMsg(@RequestBody SystemMsg systemMsg) throws Exception {
     if (messageService.createSystemMsg(systemMsg) == 1) {
       return new Response(ExceptionMsg.Success);
@@ -91,11 +91,29 @@ public class MessageController {
     }
   }
 
-  @RequestMapping("/getSystemMessage")
+  @RequestMapping(value = "/getSystemMessage",method = RequestMethod.GET)
   public Response getSystemMessage() throws Exception {
     HashMap<String, List> map = new HashMap<>();
     map.put("messageList", messageService.getSystemMsgList());
     return new Response(ExceptionMsg.Success, map);
+  }
+
+  @RequestMapping(value = "/updateSystemMsg",method = RequestMethod.POST)
+  public Response updateSystemMsg(@RequestBody SystemMsg systemMsg) throws Exception{
+    if (systemMsg.getId() == null || systemMsg.getContent() == null || systemMsg.getTitle() == null){
+      throw new GlobalException(ExceptionMsg.PasswordError);
+    }
+    messageService.updateSystemMsg(systemMsg);
+    return new Response(ExceptionMsg.Success);
+  }
+
+  @RequestMapping(value = "/deleteSystemMsg",method = RequestMethod.POST)
+  public Response deleteSystemMsg(@RequestBody SystemMsg systemMsg) throws Exception{
+    if (systemMsg.getId() == null){
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
+    messageService.deleteSystemMsg(systemMsg.getId());
+    return new Response(ExceptionMsg.Success);
   }
 
   @RequestMapping("/negotiate")

@@ -15,12 +15,21 @@
   <select id="getMessageList" parameterType="integer" resultType="Map">
         select message.id id, type, title, content, message.createDate, userName senderName, isRead from message,user where receiver=#{uid} and sender = user.id;
     </select>
+  <select id="getMessageInfo" parameterType="integer" resultType="Message">
+        select * from message where id=#{id}
+  </select>
   <insert id="createSystemMsg" parameterType="SystemMsg">
         insert into systemMsg set title=#{title},content=#{content},createDate=#{createDate}
     </insert>
   <select id="getSystemMsgList" resultType="SystemMsg">
         select * from systemMsg
     </select>
+  <update id="updateSystemMsg" parameterType="SystemMsg">
+        update systemMsg set title=#{title},content=#{content} where id=#{id}
+    </update>
+  <delete id="deleteSystemMsg" parameterType="integer">
+        delete from systemMsg where id=#{systemMsgId}
+    </delete>
   <insert id="createNegotiate" parameterType="Negotiate">
         insert into negotiate set status=#{status},currentPrice=#{currentPrice},
         createDate=#{createDate},tradeBillId=#{tradeBillId}

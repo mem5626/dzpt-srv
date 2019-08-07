@@ -54,11 +54,13 @@ public class MessageService {
   }
 
   public int deleteMessage(Integer messageId, Integer uid) {
+    if(messageMapper.getMessageInfo(messageId).getId() != uid){
+      throw new GlobalException(ExceptionMsg.NotAllow);
+    }
     return messageMapper.deleteMessage(messageId);
   }
 
   public int setReadMessage(Integer messageId) {
-
     return messageMapper.setReadMessage(messageId);
   }
 
@@ -71,7 +73,19 @@ public class MessageService {
     return messageMapper.getSystemMsgList();
   }
 
-  @Transactional
+  public void updateSystemMsg(SystemMsg systemMsg){
+    int result = messageMapper.updateSystemMsg(systemMsg);
+    if (result != 1){
+      throw new GlobalException(ExceptionMsg.Error,"更新系统消息返回值异常，为"+result);
+    }
+  }
+
+  public void deleteSystemMsg(Integer systemMsgId){
+    int result = messageMapper.deleteSystemMsg(systemMsgId);
+    if (result != 1){
+      throw new GlobalException(ExceptionMsg.Error,"删除系统消息返回值异常，为"+result);
+    }
+  }
   public int negotiate(Negotiate negotiate, Message message, Integer listGoodsId) {
     Date createDate = new Date();
     message.setCreateDate(createDate);

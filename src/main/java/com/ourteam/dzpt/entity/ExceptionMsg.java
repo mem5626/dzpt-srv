@@ -20,7 +20,8 @@ public enum ExceptionMsg {
   DeliveryExit("E0015", "交收单已存在"),
   UploadFiled("E0016", "上传图片失败"),
   AddMyCarError("E0017","商品已售出"),
-  HasBeenBan("E0018","用户已被封禁");
+  HasBeenBan("E0018","用户已被封禁"),
+  RepeatRequest("E0019","重复请求");
 
 
   private String code;
