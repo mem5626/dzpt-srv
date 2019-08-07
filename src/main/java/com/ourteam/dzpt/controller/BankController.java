@@ -37,6 +37,39 @@ MybankPayCpayCppayapplyRequestV1.MybankPayCpayCppayapplyRequestV1Biz bizContent=
 
       beanGoodsInfo.setGoodsSubId("1");
       beanGoodsInfo.setGoodsName("1");
-      beanGoodsInfo.setPayeeCompanyName("");
+      beanGoodsInfo.setPayeeCompanyName("payeeCompanyName");
+
+      beanGoodsInfo.setGoodsNumber("1");
+      beanGoodsInfo.setGoodsAmt("100");
+      beanGoodsInfo.setGoodsUnit("单位");
+
+      beanGoodsInfoList.add(beanGoodsInfo);
+
+      beanRecvMallInfo.setMallCode("0200EH0013036");
+      beanRecvMallInfo.setMallName("商户名");
+      beanRecvMallInfo.setPayeeCompanyName("3065脚本账户名称_普通存款人民币");
+      beanRecvMallInfo.setPayeeSysflag("1");
+
+      beanRecvMallInfo.setMccCode("1");
+      beanRecvMallInfo.setMccName("1");
+      beanRecvMallInfo.setBusinessLicense("1");
+      beanRecvMallInfo.setBusinessLicenseType("e");
+
+      beanRecvMallInfo.setPayeeBankCode("1");
+      beanRecvMallInfo.setPayeeAccno("0200062009212098448");
+      beanRecvMallInfo.setPayAmount("3332");
+      beanRecvMallInfoList.add(beanRecvMallInfo);
+
+      bizContent.setAgreeCode("0020000998140010137438000000097112");
+      bizContent.setPartnerSeq("030240009696001327461018792");
+      bizContent.setPayChannel("1");
+      bizContent.setPayMode("1");
+      bizContent.setPayEntitys("10000000000000000000");
+      bizContent.setInternationalFlag("1");
+      bizContent.setAsynFlag("0");
+      bizContent.setPayMemno("0200EH0013036");
+      bizContent.setOrderCode("2024010130002");
+      bizContent.setOrderAmount("4332");
+      bizContent.setOrderCurr("1");
     }
 }
