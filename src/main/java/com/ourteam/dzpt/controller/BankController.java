@@ -1,8 +1,15 @@
 package com.ourteam.dzpt.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import com.icbc.api.DefaultIcbcClient;
 import com.icbc.api.internal.util.internal.util.fastjson.JSONObject;
+import com.icbc.api.request.MybankPayCpayCpordercloseRequestV1.MybankPayCpayCpordercloseV1RequestV1Biz;
 import com.icbc.api.request.MybankPayCpayCppayapplyRequestV1;
+import com.icbc.api.request.MybankPayCpayCppayapplyRequestV1.BeanGoodsInfo;
+import com.icbc.api.request.MybankPayCpayCppayapplyRequestV1.BeanRecvMallInfo;
+import com.icbc.api.request.MybankPayCpayCppayapplyRequestV1.MybankPayCpayCppayapplyRequestV1Biz;
 import com.icbc.api.response.MybankCreditcardOnlinecardCardapplylistReponseV1;
 
 public class BankController {
@@ -16,5 +23,20 @@ public class BankController {
     public static void main(String[] args){
       DefaultIcbcClient client=new DefaultIcbcClient(APP_ID,MY_PRIVATE_KEY,APIGW_PUBILC_KEY);
 
+      MybankPayCpayCppayapplyRequestV1 request=new MybankPayCpayCppayapplyRequestV1();
+
+      request.setServiceUrl("");
+
+
+MybankPayCpayCppayapplyRequestV1.MybankPayCpayCppayapplyRequestV1Biz bizContent=new MybankPayCpayCppayapplyRequestV1Biz();
+      MybankPayCpayCppayapplyRequestV1.BeanGoodsInfo beanGoodsInfo=new BeanGoodsInfo();
+      MybankPayCpayCppayapplyRequestV1.BeanRecvMallInfo beanRecvMallInfo=new BeanRecvMallInfo();
+
+      List<MybankPayCpayCppayapplyRequestV1.BeanGoodsInfo> beanGoodsInfoList = new ArrayList<MybankPayCpayCppayapplyRequestV1.BeanGoodsInfo>();
+      List<MybankPayCpayCppayapplyRequestV1.BeanRecvMallInfo> beanRecvMallInfoList = new ArrayList<MybankPayCpayCppayapplyRequestV1.BeanRecvMallInfo>();
+
+      beanGoodsInfo.setGoodsSubId("1");
+      beanGoodsInfo.setGoodsName("1");
+      beanGoodsInfo.setPayeeCompanyName("");
     }
 }
