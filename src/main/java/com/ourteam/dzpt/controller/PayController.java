@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.icbc.api.internal.util.internal.util.fastjson.JSONObject;
+import com.icbc.api.request.MybankPayCpayCppayapplyRequestV1;
+import com.icbc.api.response.MybankCreditcardOnlinecardCardapplylistReponseV1;
+
 @RestController
 public class PayController {
 
@@ -101,6 +105,13 @@ public class PayController {
   public Response test(HttpServletRequest request) {
     logger.info(accountService.getBillByUserId("1"));
     logger.info(accountService.testPostAddCard("1"));
+    return new Response(ExceptionMsg.Success);
+  }
+
+
+  @RequestMapping(value = "/pay/test1", method = RequestMethod.GET)
+  public Response test1(HttpServletRequest request) {
+
     return new Response(ExceptionMsg.Success);
   }
 }
