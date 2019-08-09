@@ -16,6 +16,7 @@
                serviceCharge,
                `order`.amount,
                `order`.price,
+                unit,
                 user1.id buyer,
                 user2.id seller,
                 user1.phone phone,

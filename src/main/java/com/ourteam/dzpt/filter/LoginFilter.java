@@ -44,10 +44,10 @@ public class LoginFilter implements Filter {
 
     String[] allowURI = {"/signup", "/login", "/logout", "/hang/getBuyerHangList",
         "/tradeBill/getTradeBill", "/hang/getSellerHangList", "/search/searchHangGood",
-        "/message/getSystemMessage"};
+        "/message/getSystemMessage","/upload/"};
     String path = request.getRequestURI();
     for (String str : allowURI) {
-      if (path.equals(str)) {
+      if (path.contains(str)) {
         filterChain.doFilter(servletRequest, servletResponse);
         return;
       }
