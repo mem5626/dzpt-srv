@@ -30,14 +30,27 @@ public class BillService {
     }
   }
 
-  public int addBill(Bill bill) {
+  public int addBill(Map<String,String> info) {
+    Bill bill = new Bill();
+    bill.setUserId(Integer.parseInt(info.get("userId")));
+    bill.setBalance(Integer.parseInt(info.get("balance")));
+    bill.setMoney(Integer.parseInt(info.get("money")));
+    bill.setDrcrflg(Integer.parseInt(info.get("drcrflg")));
+    bill.setTradeType(Integer.parseInt(info.get("tradeType")));
+    //后台需要处理少传属性的情况
+    if (info.get("tradeWay") != null) {
+      bill.setTradeWay(Integer.parseInt(info.get("tradeWay")));
+    }
+    if (info.get("tradeWayName") != null) {
+      bill.setTradeWayName(info.get("tradeWayName"));
+    }
+    if (info.get("tradeId") != null) {
+      bill.setTradeId(Integer.parseInt(info.get("tradeId")));
+    }
     bill.setCreateDate(new Date());
     return billMapper.createBill(bill);
   }
 
-  public Page<Bill> findWithBLOBsByPage(Map<String,String> info){
-    return billMapper.list(info);
-  }
 
 
 }
