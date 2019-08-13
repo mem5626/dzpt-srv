@@ -17,13 +17,4 @@ public interface BillMapper {
 
   int updateBill(Bill bill);
 
-//  List<Bill> list(Map<String, Object> map);
-//  /**
-//   * 插件 分页 查询表中部分字段
-//   */
-//  Page<Bill> findByPage();
-//  /**
-//   * 插件 分页  查询表中所有字段
-//   */
-//  Page<Bill> findWithBLOBsByPage();
 }

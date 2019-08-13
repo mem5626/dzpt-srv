@@ -3,18 +3,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourteam.dzpt.mapper.BillMapper">
 
-  <!--<resultMap id="BaseResultMap" type="com.ourteam.dzpt.entity.Bill" >-->
-  <!--<result column="id" property="id" jdbcType="INTEGER" />-->
-  <!--<result column="payer" property="payer" jdbcType="INTEGER" />-->
-  <!--<result column="receiver" property="receiver" jdbcType="INTEGER" />-->
-  <!--<result column="money" property="money" jdbcType="INTEGER" />-->
-  <!--<result column="tradeWay" property="tradeWay" jdbcType="INTEGER" />-->
-  <!--<result column="tradeType" property="tradeType" jdbcType="INTEGER" />-->
-  <!--<result column="orderId" property="orderId" jdbcType="INTEGER" />-->
-  <!--<result column="balance" property="balance" jdbcType="INTEGER" />-->
-  <!--<result column="createDate" property="createDate" jdbcType="TIMESTAMP" />-->
-  <!--</resultMap>-->
-
   <select id="selectBillByUid" resultType="com.ourteam.dzpt.entity.Bill"
     parameterType="integer">select * from bill where userId=#{uid}</select>
 
@@ -44,42 +32,4 @@
         createDate = #{createDate}
     </update>
 
-
-  <!--<select id="list" resultType="com.sqlb.pojo.Article">-->
-    <!--select-->
-    <!--<include refid="Base_Column_List"/>-->
-    <!--from article-->
-    <!--<where>-->
-      <!--<if test="id != null and id != ''">and id = #{id}</if>-->
-      <!--<if test="author != null and author != ''">and author = #{author}</if>-->
-      <!--<if test="createTime != null and createTime != ''">and create_time = #{createTime}</if>-->
-      <!--<if test="typeName != null and typeName != ''">and type_name = #{typeName}</if>-->
-      <!--<if test="imageUrl != null and imageUrl != ''">and image_url = #{imageUrl}</if>-->
-      <!--<if test="content != null and content != ''">and content = #{content}</if>-->
-    <!--</where>-->
-    <!--<choose>-->
-      <!--<when test="createTime != null and createTime.trim() != ''">-->
-        <!--order by ${createTime}-->
-      <!--</when>-->
-      <!--<otherwise>-->
-        <!--order by id desc-->
-      <!--</otherwise>-->
-    <!--</choose>-->
-    <!--<if test="offset != null and limit != null">-->
-      <!--limit #{offset}, #{limit}-->
-    <!--</if>-->
-  <!--</select>-->
-
-  <!--<select id="findByPage" resultMap="BaseResultMap">-->
-    <!--select-->
-    <!--<include refid="Base_Column_List" />-->
-    <!--from bill-->
-  <!--</select>-->
-  <!--<select id="findWithBLOBsByPage" resultMap="ResultMapWithBLOBs">-->
-    <!--select-->
-    <!--<include refid="Base_Column_List"/>-->
-    <!--,-->
-    <!--<include refid="Blob_Column_List"/>-->
-    <!--from blil-->
-  <!--</select>-->
 </mapper>

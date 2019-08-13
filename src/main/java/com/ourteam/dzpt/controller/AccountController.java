@@ -2,6 +2,7 @@ package com.ourteam.dzpt.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ourteam.dzpt.entity.Bill;
 import com.ourteam.dzpt.entity.Card;
@@ -11,7 +12,9 @@ import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.service.AccountService;
 import com.ourteam.dzpt.service.BillService;
 import com.ourteam.dzpt.service.CardService;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -71,8 +74,21 @@ public class AccountController {
   @RequestMapping(value = "/mine/getBill", method = RequestMethod.GET)
   public Response getBillById(String userId) throws GlobalException {
     int id = Integer.parseInt(userId);
+
+    //分页查询
+    PageHelper.startPage(1, 1);
+    List<Bill> list = billService.selectBillByUid(id);
+    PageInfo<Bill> page = new PageInfo<Bill>(list);
+    List<Bill> pageList = page.getList();
+    System.out.println("总数量：" + page.getTotal());
+    System.out.println("当前页查询记录：" + page.getList().size());
+    System.out.println("当前页码：" + page.getPageNum());
+    System.out.println("每页显示数量：" + page.getPageSize());
+    System.out.println("总页：" + page.getPages());
+
     Map<String, Object> map = new HashMap<>();
     map.put("billList", billService.selectBillByUid(id));
+    map.put("total",page.getTotal());
     return new Response(ExceptionMsg.Success, map);
   }
 
@@ -96,15 +112,6 @@ public class AccountController {
     }
   }
 
-//  @ResponseBody
-//  @RequestMapping("/page")
-//  public PageInfo<Bill> findWithBLOBsByPage(@RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
-//      @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize){
-//
-//    Page<Bill> billList = billService.findWithBLOBsByPage(pageNum, pageSize);
-//    // 需要把Page包装成PageInfo对象才能序列化。该插件也默认实现了一个PageInfo
-//    PageInfo<Bill> pageInfo = new PageInfo<>(billList);
-//    return pageInfo;
-//  }
+
 
 }
