@@ -24,7 +24,7 @@ public class UploadUtil {
     String imageName = UUID.randomUUID().toString() + originalFileName
         .substring(originalFileName.lastIndexOf("."));
     String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-    String fileDirPath = uploadFilePath + datePath + "/" + imageDir;
+    String fileDirPath = uploadFilePath + imageDir + "/" + datePath;
     File fileDir = new File(fileDirPath);
     if (!fileDir.exists()) {
       fileDir.mkdirs();
@@ -34,7 +34,7 @@ public class UploadUtil {
     try {
       File newFile = new File(filePath);
       pic.transferTo(newFile);
-      return datePath + "/" + imageDir + "/" + imageName;
+      return imageDir + "/" + datePath + "/" + imageName;
     } catch (IOException e) {
       throw new GlobalException(ExceptionMsg.UploadFiled);
     }

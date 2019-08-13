@@ -1,10 +1,12 @@
 package com.ourteam.dzpt.controller;
 
+import cn.hutool.core.collection.CollUtil.Hash;
 import com.icbc.api.IcbcApiException;
 import com.icbc.api.response.MybankPayCpayCppayapplyResponseV1;
 import com.ourteam.dzpt.entity.ExceptionMsg;
 import com.ourteam.dzpt.entity.Response;
 import com.ourteam.dzpt.exception.GlobalException;
+import com.ourteam.dzpt.exception.GlobalExceptionHandler;
 import com.ourteam.dzpt.service.OrderService;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -24,26 +26,26 @@ import com.icbc.api.request.MybankPayCpayCppayapplyRequestV1.MybankPayCpayCppaya
 import com.icbc.api.response.MybankCreditcardOnlinecardCardapplylistReponseV1;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 public class BankController {
   @Autowired
   OrderService orderService;
 
+  private static Logger logger = LoggerFactory.getLogger(BankController.class);
+
   @RequestMapping(value = "/bank/pay", method = RequestMethod.POST)
   public Response pay(HttpServletRequest request, @RequestBody HashMap<String, Object> info)
       throws GlobalException {
     Map map = orderService.getOrderInfo((Integer) info.get("listedGoodsId"));
-    System.out.println(JSONObject.toJSONString(info));
-    System.out.println(info.get("payChannel"));
-    if (info.get("payChannel") == null ){
-      return new Response(ExceptionMsg.ParameterError);
-    }
     map.put("payChannel",info.get("payChannel"));
     MybankPayCpayCppayapplyResponseV1 result = test(map);
 
@@ -53,6 +55,12 @@ public class BankController {
       return new Response(ExceptionMsg.Success, map1);
     }
     return new Response(ExceptionMsg.Error);
+  }
+
+  @RequestMapping("/bank/test2")
+  public Response test2(HttpServletRequest request, @RequestBody HashMap map){
+    logger.info("支付成功回调内容" + JSONObject.toJSONString(map));
+    return new Response(ExceptionMsg.Success);
   }
 
 
@@ -87,7 +95,7 @@ public class BankController {
     //选填
     beanGoodsInfo.setGoodsNumber(String.valueOf(info.get("amount")));
     //选填
-    beanGoodsInfo.setGoodsAmt(String.valueOf((Integer)info.get("price")*100));
+    beanGoodsInfo.setGoodsAmt(String.valueOf((Integer)info.get("price")*100*(Integer)info.get("amount")));
     //选填
     beanGoodsInfo.setGoodsUnit((String)info.get("unit"));
     //选填
@@ -131,11 +139,12 @@ public class BankController {
     bizContent.setOrderRemark("订单备注");
     bizContent.setRceiptRemark("回单补充信息备注");
 
+
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
     bizContent.setSubmitTime(simpleDateFormat.format(new Date()));
 
-    bizContent.setReturnUrl("http://10.2.2.50:8081");
-//    bizContent.setCallbackUrl("http://10.2.2.50:8080/bank/test2");
+    bizContent.setReturnUrl("http://127.0.0.1:8081");
+    bizContent.setCallbackUrl("http://120.77.205.253:8080/bank/test2");
     //bizContent.setSubmitTime("");
 
     bizContent.setPayeeList(beanRecvMallInfoList);
@@ -151,12 +160,8 @@ public class BankController {
     try {
       response = client.execute(request,msgId);
       System.out.println(JSONObject.toJSONString(response));
-      if (response.isSuccess()){
-        System.out.println(response.getReturnCode());
-      }else{
-        System.out.println(response.getReturnCode());
-        System.out.println(response.getReturnMsg());
-      }
+      logger.info("调用工行接口请求内容:" + JSONObject.toJSONString(request));
+      logger.info("调用工行接口相应内容:" + JSONObject.toJSONString(response));
       return response;
     }catch (IcbcApiException e){
       e.printStackTrace();

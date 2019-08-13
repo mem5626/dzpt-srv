@@ -44,7 +44,7 @@ public class LoginFilter implements Filter {
 
     String[] allowURI = {"/signup", "/login", "/logout", "/hang/getBuyerHangList",
         "/tradeBill/getTradeBill", "/hang/getSellerHangList", "/search/searchHangGood",
-        "/message/getSystemMessage","/upload/"};
+        "/message/getSystemMessage","/upload/","/bank/test2"};
     String path = request.getRequestURI();
     for (String str : allowURI) {
       if (path.contains(str)) {
