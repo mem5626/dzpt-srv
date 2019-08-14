@@ -50,7 +50,7 @@ public class BankService {
     List<MybankPayCpayCppayapplyRequestV1.BeanRecvMallInfo> beanRecvMallInfoList = new ArrayList<MybankPayCpayCppayapplyRequestV1.BeanRecvMallInfo>();
 
     //商品信息
-    beanGoodsInfo.setGoodsSubId((String) info.get("orderId"));
+    beanGoodsInfo.setGoodsSubId(StaticUtil.GoodsSubId);
     //选填
     beanGoodsInfo.setGoodsName((String) info.get("goodsName"));
     //选填

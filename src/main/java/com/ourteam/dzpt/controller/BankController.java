@@ -8,7 +8,9 @@ import com.ourteam.dzpt.entity.Response;
 import com.ourteam.dzpt.exception.GlobalException;
 import com.ourteam.dzpt.exception.GlobalExceptionHandler;
 import com.ourteam.dzpt.service.BankService;
+import com.ourteam.dzpt.service.BillService;
 import com.ourteam.dzpt.service.OrderService;
+import com.ourteam.dzpt.service.TradeBillService;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,17 +44,22 @@ public class BankController {
   OrderService orderService;
   @Autowired
   BankService bankService;
+  @Autowired
+  TradeBillService tradeBillService;
+  @Autowired
+  BillService billService;
 
   private static Logger logger = LoggerFactory.getLogger(BankController.class);
   //  银行卡支付
   @RequestMapping(value = "/bank/pay", method = RequestMethod.POST)
-  public Response pay(HttpServletRequest request, @RequestBody HashMap<String, Object> info)
+  public Response pay(HttpServletRequest request, @RequestBody HashMap<String, String> info)
       throws GlobalException {
-    Map map = orderService.getOrderInfo((Integer) info.get("listedGoodsId"));
+    Map map = orderService.getOrderInfo((Integer.valueOf(info.get("listedGoodsId"))));
     map.put("payChannel",info.get("payChannel"));
     MybankPayCpayCppayapplyResponseV1 result = bankService.payByBank(map);
 
     if (result!=null && result.isSuccess()){
+      billService.addBill(info);
       HashMap map1 = new HashMap();
       map1.put("url",result.getRedirectParam().replaceAll("http://122.64.141.6:80","http://114.255.225.35:83"));
       return new Response(ExceptionMsg.Success, map1);

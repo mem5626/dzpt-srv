@@ -57,10 +57,11 @@ public class PayController {
           long afterBalance = beforeBalance + Integer.parseInt(info.get("money"));
           sellerAccount.setBalance(afterBalance);
           Map <String,String> sellerInfo=info;
+          sellerInfo.replace("userId",info.get("sellerId"));
           sellerInfo.replace("banlance",String.valueOf(afterBalance));
           sellerInfo.replace("drcrflg","2");
-          sellerInfo.replace("tradeWay","");
-          sellerInfo.replace("tradeWayName","");
+          sellerInfo.replace("tradeWay",null);
+          sellerInfo.replace("tradeWayName",null);
           if (billService.addBill(sellerInfo) == 1 && accountService.updateBalance(sellerAccount) == 1) {
             return new Response(ExceptionMsg.Success);
           } else {
