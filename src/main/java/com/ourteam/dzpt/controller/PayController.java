@@ -33,6 +33,7 @@ public class PayController {
 
   private static Logger logger = LoggerFactory.getLogger(PayController.class);
 
+  //充值、提现、零钱支付
   @RequestMapping(value = "/pay/commit", method = RequestMethod.POST)
   public Response pay(HttpServletRequest request, @RequestBody HashMap<String, String> info)
       throws GlobalException {
@@ -49,26 +50,43 @@ public class PayController {
           targetAccount.setBalance(Integer.parseInt(info.get("balance")));
           accountService.updateBalance(targetAccount);
         }
+        //写卖方增加账单、余额变更逻辑
+        if(info.get("tradeType").equals("3")){
+          Account sellerAccount = accountService.getAccountByUid(Integer.parseInt(info.get("sellerId")));
+          long beforeBalance = sellerAccount.getBalance();
+          long afterBalance = beforeBalance + Integer.parseInt(info.get("money"));
+          sellerAccount.setBalance(afterBalance);
+          Map <String,String> sellerInfo=info;
+          sellerInfo.replace("banlance",String.valueOf(afterBalance));
+          sellerInfo.replace("drcrflg","2");
+          sellerInfo.replace("tradeWay","");
+          sellerInfo.replace("tradeWayName","");
+          if (billService.addBill(sellerInfo) == 1 && accountService.updateBalance(sellerAccount) == 1) {
+            return new Response(ExceptionMsg.Success);
+          } else {
+            throw new GlobalException(ExceptionMsg.Error);
+          }
+        }
         return new Response(ExceptionMsg.Success);
       } else {
         throw new GlobalException(ExceptionMsg.PasswordError);
       }
   }
 
-  @RequestMapping(value = "/pay/refund", method = RequestMethod.POST)
-  public Response refund(HttpServletRequest request, @RequestBody HashMap<String, String> info) {
-    Bill bill = new Bill();
-    Account targetAccount = accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
-    long beforeBalance = targetAccount.getBalance();
-    long afterBalance = beforeBalance + Integer.parseInt(info.get("money"));
-    targetAccount.setBalance(afterBalance);
-    info.replace("banlance",String.valueOf(afterBalance));
-    if (billService.addBill(info) == 1 && accountService.updateBalance(targetAccount) == 1) {
-      return new Response(ExceptionMsg.Success);
-    } else {
-      throw new GlobalException(ExceptionMsg.Error);
-    }
-  }
+//  @RequestMapping(value = "/pay/refund", method = RequestMethod.POST)
+//  public Response refund(HttpServletRequest request, @RequestBody HashMap<String, String> info) {
+//    Bill bill = new Bill();
+//    Account targetAccount = accountService.getAccountByUid(Integer.parseInt(info.get("userId")));
+//    long beforeBalance = targetAccount.getBalance();
+//    long afterBalance = beforeBalance + Integer.parseInt(info.get("money"));
+//    targetAccount.setBalance(afterBalance);
+//    info.replace("banlance",String.valueOf(afterBalance));
+//    if (billService.addBill(info) == 1 && accountService.updateBalance(targetAccount) == 1) {
+//      return new Response(ExceptionMsg.Success);
+//    } else {
+//      throw new GlobalException(ExceptionMsg.Error);
+//    }
+//  }
 
   @RequestMapping(value = "/pay/test", method = RequestMethod.GET)
   public Response test(HttpServletRequest request) {

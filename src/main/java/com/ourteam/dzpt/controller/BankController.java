@@ -44,7 +44,7 @@ public class BankController {
   BankService bankService;
 
   private static Logger logger = LoggerFactory.getLogger(BankController.class);
-
+  //  银行卡支付
   @RequestMapping(value = "/bank/pay", method = RequestMethod.POST)
   public Response pay(HttpServletRequest request, @RequestBody HashMap<String, Object> info)
       throws GlobalException {
