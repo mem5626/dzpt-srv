@@ -16,9 +16,21 @@
   <delete id="deleteById" parameterType="INTEGER">delete from card where id=#{id}</delete>
 
   <insert id="addCard"
-    parameterType="com.ourteam.dzpt.entity.Card">insert into card set cardNumber=#{cardNumber},userId=#{userId},bank=#{bank},bindTime=#{bindTime}</insert>
+    parameterType="com.ourteam.dzpt.entity.Card">insert into card set cardNumber=#{cardNumber},userId=#{userId},bank=#{bank},bindTime=#{bindTime},receive=#{receive}</insert>
 
   <update id="updateCard" parameterType="com.ourteam.dzpt.entity.Card">
         update card set cardNumber=#{cardNumber},bank=#{bank} where userId=#{userId}
     </update>
+  
+  <update id="setReceive" parameterType="Card">
+    update card set receive=1 where id=#{id} and userId=#{userId}
+  </update>
+  
+  <update id="cancelReceive" parameterType="integer">
+    update card set receive=0 where userId=#{userId}
+  </update>
+
+  <select id="getReceive" parameterType="integer" resultType="Card">
+    select * from card where userId=#{userId} and receive=1
+  </select>
 </mapper>

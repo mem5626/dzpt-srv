@@ -14,5 +14,11 @@ public interface CardMapper {
   int deleteById(Integer id);
 
   int updateCard(Card card);
+
+  int setReceive(Card card);
+
+  void cancelReceive(Integer userId);
+
+  Card getReceive(Integer userId);
 }
 

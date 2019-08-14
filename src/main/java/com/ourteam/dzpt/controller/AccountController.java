@@ -60,6 +60,15 @@ public class AccountController {
     }
   }
 
+  @RequestMapping(value = "/mine/setReceiveCard",method = RequestMethod.POST)
+  public Response setReceiveCard(HttpServletRequest request,@RequestBody Card card) throws Exception{
+    if (card.getUserId() == 0 || card.getId() == 0){
+      throw new GlobalException(ExceptionMsg.ParameterError);
+    }
+    cardService.setReceiveCard(card);
+    return new Response(ExceptionMsg.Success);
+  }
+
   @RequestMapping(value = "/mine/deleteCard", method = RequestMethod.POST)
   public Response DeleteCard(HttpServletRequest request, @RequestBody HashMap<String, String> info)
       throws GlobalException {
@@ -69,6 +78,12 @@ public class AccountController {
     } else {
       return new Response(ExceptionMsg.Error);
     }
+  }
+
+  @RequestMapping(value = "/mine/getReceiveCard",method = RequestMethod.GET)
+  public Response getReceiveCard(HttpServletRequest request,Card card) throws Exception{
+    if (card.getUserId() == 0) throw new GlobalException(ExceptionMsg.ParameterError);
+    return new Response(ExceptionMsg.Success,cardService.getReceiveCard(card.getUserId()));
   }
 
   @RequestMapping(value = "/mine/getBill", method = RequestMethod.GET)

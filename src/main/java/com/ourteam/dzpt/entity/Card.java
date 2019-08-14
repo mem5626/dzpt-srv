@@ -9,6 +9,8 @@ public class Card {
   private int userId;
   private long cardNumber;
   private String bank;
+  private int receive=0;
+
 
   @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
   private Date bindTime;
@@ -53,4 +55,13 @@ public class Card {
   public void setBindTime(Date bindTime) {
     this.bindTime = bindTime;
   }
+
+  public int getReceive() {
+    return receive;
+  }
+
+  public void setReceive(int receive) {
+    this.receive = receive;
+  }
+
 }

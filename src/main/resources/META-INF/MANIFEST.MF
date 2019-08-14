@@ -1,0 +1,39 @@
+Manifest-Version: 1.0
+Class-Path: tomcat-embed-el-9.0.21.jar logback-classic-1.2.3.jar icbc-
+ ca.jar proguard.jar icbc-api-sdk-cop.jar commons-logging-1.2.jar icbc
+ -api-sdk-cop-io.jar InfosecCrypto_Java1_02_JDK14+.jar javax.mail-1.6.
+ 2.jar spring-boot-starter-json-2.1.6.RELEASE.jar spring-data-commons-
+ 2.1.9.RELEASE.jar jackson-core-2.9.9.jar mybatis-spring-boot-starter-
+ 2.0.0.jar httpcore-4.4.11.jar quartz-2.3.1.jar spring-session-core-2.
+ 1.7.RELEASE.jar spring-boot-autoconfigure-2.1.6.RELEASE.jar spring-da
+ ta-keyvalue-2.1.9.RELEASE.jar spring-boot-starter-mail-2.1.6.RELEASE.
+ jar pagehelper-4.1.6.jar spring-boot-starter-logging-2.1.6.RELEASE.ja
+ r jackson-annotations-2.9.0.jar spring-tx-5.1.8.RELEASE.jar tomcat-em
+ bed-websocket-9.0.21.jar jul-to-slf4j-1.7.26.jar spring-boot-starter-
+ tomcat-2.1.6.RELEASE.jar jackson-module-parameter-names-2.9.9.jar val
+ idation-api-2.0.1.Final.jar spring-boot-starter-quartz-2.1.6.RELEASE.
+ jar log4j-api-2.11.2.jar spring-expression-5.1.8.RELEASE.jar jackson-
+ datatype-jdk8-2.9.9.jar proguard.jar lettuce-core-5.1.7.RELEASE.jar j
+ ackson-datatype-jsr310-2.9.9.jar spring-web-5.1.8.RELEASE.jar classma
+ te-1.4.0.jar spring-jdbc-5.1.8.RELEASE.jar httpclient-4.5.5.jar netty
+ -transport-4.1.36.Final.jar mybatis-3.5.0.jar spring-boot-starter-dat
+ a-redis-2.1.6.RELEASE.jar javax.annotation-api-1.3.2.jar log4j-to-slf
+ 4j-2.11.2.jar netty-handler-4.1.36.Final.jar netty-common-4.1.36.Fina
+ l.jar spring-data-redis-2.1.9.RELEASE.jar mybatis-spring-2.0.0.jar re
+ actor-core-3.2.10.RELEASE.jar mchange-commons-java-0.2.15.jar spring-
+ webmvc-5.1.8.RELEASE.jar jsqlparser-0.9.5.jar logback-core-1.2.3.jar 
+ spring-jcl-5.1.8.RELEASE.jar tomcat-embed-core-9.0.21.jar spring-boot
+ -2.1.6.RELEASE.jar spring-context-5.1.8.RELEASE.jar netty-buffer-4.1.
+ 36.Final.jar snakeyaml-1.23.jar mybatis-spring-boot-autoconfigure-2.0
+ .0.jar netty-codec-4.1.36.Final.jar spring-beans-5.1.8.RELEASE.jar ja
+ ckson-databind-2.9.9.jar hutool-all-4.3.1.jar spring-context-support-
+ 5.1.8.RELEASE.jar fastjson-1.2.46.jar spring-aop-5.1.8.RELEASE.jar sp
+ ring-boot-starter-2.1.6.RELEASE.jar reactive-streams-1.0.2.jar mysql-
+ connector-java-8.0.16.jar netty-resolver-4.1.36.Final.jar activation-
+ 1.1.jar spring-boot-starter-jdbc-2.1.6.RELEASE.jar slf4j-api-1.7.26.j
+ ar jboss-logging-3.3.2.Final.jar spring-boot-starter-web-2.1.6.RELEAS
+ E.jar spring-oxm-5.1.8.RELEASE.jar hibernate-validator-6.0.17.Final.j
+ ar spring-core-5.1.8.RELEASE.jar HikariCP-3.2.0.jar commons-codec-1.1
+ 1.jar spring-session-data-redis-2.1.7.RELEASE.jar
+Main-Class: com.ourteam.dzpt.DzptApplication
+
