@@ -23,9 +23,6 @@ public class CardService {
 
   public int addCard(Card card) {
     card.setBindTime(new Date());
-    if (cardMapper.getReceive(card.getUserId()).getBank() == null){
-      card.setReceive(1);
-    }
     return cardMapper.addCard(card);
   }
 
