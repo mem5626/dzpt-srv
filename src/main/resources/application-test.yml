@@ -17,3 +17,6 @@ mybatis:
 
 web:
   upload-path: C:/dzpt/upload/
+
+logging:
+  config: classpath:logback-boot.xml

@@ -23,7 +23,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Order(1)
-//@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = "/singup")
 public class CheckRepeatFilter implements Filter {
 
   @Autowired

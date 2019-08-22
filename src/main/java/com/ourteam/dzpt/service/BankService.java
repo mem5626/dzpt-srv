@@ -106,8 +106,8 @@ public class BankService {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
     bizContent.setSubmitTime(simpleDateFormat.format(new Date()));
 
-    bizContent.setReturnUrl("http://127.0.0.1:8081");
-    bizContent.setCallbackUrl("http://120.77.205.253:8080/bank/test2");
+    bizContent.setReturnUrl("http://10.2.1.226/#/Order");
+    bizContent.setCallbackUrl("http://10.2.1.226:8080/bank/test2");
     //bizContent.setSubmitTime("");
 
     bizContent.setPayeeList(beanRecvMallInfoList);

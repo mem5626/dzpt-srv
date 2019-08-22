@@ -59,7 +59,8 @@ public class BankController {
     MybankPayCpayCppayapplyResponseV1 result = bankService.payByBank(map);
 
     if (result!=null && result.isSuccess()){
-      billService.addBill(info);
+      if (info.get("payChannel") == null || info.get("payChannel").equals("1"))
+        billService.addBill(info);
       HashMap map1 = new HashMap();
       map1.put("url",result.getRedirectParam().replaceAll("http://122.64.141.6:80","http://114.255.225.35:83"));
       return new Response(ExceptionMsg.Success, map1);
